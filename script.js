@@ -1,146 +1,122 @@
 (function () {
   const root = document.documentElement;
+
   const themeBtn = document.getElementById("themeBtn");
-  const navToggle = document.getElementById("navToggle");
-  const navMenu = document.getElementById("navMenu");
+  const menuBtn = document.getElementById("menuBtn");
+  const megaNav = document.getElementById("megaNav");
+
+  const searchBtn = document.getElementById("searchBtn");
+  const searchPanel = document.getElementById("searchPanel");
+  const searchInput = document.getElementById("searchInput");
+
   const year = document.getElementById("year");
   const contactForm = document.getElementById("contactForm");
 
-  const STORAGE_KEY = "portfolio_theme_v1";
-  const DEFAULT_THEME = "dark";
+  const STORAGE_THEME = "cia_style_theme_v1";
+  const DEST_EMAIL = "bruno@advir.org";
 
-  function setTheme(theme) {
-    root.setAttribute("data-theme", theme);
-    try { localStorage.setItem(STORAGE_KEY, theme); } catch (_) {}
+  function setTheme(t) {
+    root.setAttribute("data-theme", t);
+    try { localStorage.setItem(STORAGE_THEME, t); } catch (_) {}
   }
-
   function getTheme() {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved === "light" || saved === "dark") return saved;
+      const v = localStorage.getItem(STORAGE_THEME);
+      if (v === "light" || v === "dark") return v;
     } catch (_) {}
-    return DEFAULT_THEME;
+    return "dark";
   }
 
-  function toggleTheme() {
-    const current = root.getAttribute("data-theme") || DEFAULT_THEME;
-    setTheme(current === "dark" ? "light" : "dark");
+  function toggleHidden(el, btn) {
+    const isHidden = el.hasAttribute("hidden");
+    if (isHidden) el.removeAttribute("hidden");
+    else el.setAttribute("hidden", "");
+    if (btn) btn.setAttribute("aria-expanded", String(isHidden));
+  }
+
+  function closeIfOpen(el, btn) {
+    if (!el || !btn) return;
+    if (!el.hasAttribute("hidden")) {
+      el.setAttribute("hidden", "");
+      btn.setAttribute("aria-expanded", "false");
+    }
   }
 
   function setupTheme() {
-    const initial = getTheme();
-    setTheme(initial);
-    if (themeBtn) themeBtn.addEventListener("click", toggleTheme);
+    setTheme(getTheme());
+    themeBtn?.addEventListener("click", () => {
+      const cur = root.getAttribute("data-theme") || "dark";
+      setTheme(cur === "dark" ? "light" : "dark");
+    });
   }
 
   function setupYear() {
     if (year) year.textContent = String(new Date().getFullYear());
   }
 
-  function setupReveal() {
-    const els = Array.from(document.querySelectorAll(".reveal"));
-    if (!("IntersectionObserver" in window)) {
-      els.forEach(el => el.classList.add("is-visible"));
-      return;
-    }
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add("is-visible");
-          obs.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    els.forEach(el => obs.observe(el));
-  }
-
-  function setupCounters() {
-    const counters = Array.from(document.querySelectorAll("[data-counter]"));
-    if (!counters.length) return;
-
-    function animate(el) {
-      const target = Number(el.getAttribute("data-counter")) || 0;
-      const duration = 900;
-      const start = performance.now();
-      const from = 0;
-
-      function tick(t) {
-        const p = Math.min(1, (t - start) / duration);
-        const eased = 1 - Math.pow(1 - p, 3);
-        const val = Math.round(from + (target - from) * eased);
-        el.textContent = String(val);
-        if (p < 1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    }
-
-    if (!("IntersectionObserver" in window)) {
-      counters.forEach(animate);
-      return;
-    }
-
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          animate(e.target);
-          obs.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.6 });
-
-    counters.forEach(el => obs.observe(el));
-  }
-
-  function setupNav() {
-    if (!navToggle || !navMenu) return;
-
-    navToggle.addEventListener("click", () => {
-      const isOpen = navMenu.classList.toggle("is-open");
-      navToggle.setAttribute("aria-expanded", String(isOpen));
-    });
-
-    navMenu.querySelectorAll("a").forEach((a) => {
-      a.addEventListener("click", () => {
-        navMenu.classList.remove("is-open");
-        navToggle.setAttribute("aria-expanded", "false");
-      });
-    });
-
+  function setupMenu() {
+    if (!menuBtn || !megaNav) return;
+    menuBtn.addEventListener("click", () => toggleHidden(megaNav, menuBtn));
     document.addEventListener("click", (e) => {
-      const target = e.target;
-      if (!target) return;
-      if (navMenu.contains(target) || navToggle.contains(target)) return;
-      navMenu.classList.remove("is-open");
-      navToggle.setAttribute("aria-expanded", "false");
+      const t = e.target;
+      if (!t) return;
+      if (megaNav.contains(t) || menuBtn.contains(t)) return;
+      closeIfOpen(megaNav, menuBtn);
     });
+  }
+
+  function setupSearch() {
+    if (!searchBtn || !searchPanel || !searchInput) return;
+
+    searchBtn.addEventListener("click", () => {
+      toggleHidden(searchPanel, searchBtn);
+      if (!searchPanel.hasAttribute("hidden")) searchInput.focus();
+    });
+
+    // Atalho "/" para abrir busca
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "/" && document.activeElement?.tagName !== "INPUT" && document.activeElement?.tagName !== "TEXTAREA") {
+        e.preventDefault();
+        if (searchPanel.hasAttribute("hidden")) toggleHidden(searchPanel, searchBtn);
+        searchInput.focus();
+      }
+      if (e.key === "Escape") {
+        closeIfOpen(searchPanel, searchBtn);
+        closeIfOpen(megaNav, menuBtn);
+      }
+    });
+
+    function applyFilter(q) {
+      const query = q.trim().toLowerCase();
+      const nodes = document.querySelectorAll("[data-search]");
+      nodes.forEach((n) => {
+        const hay = String(n.getAttribute("data-search") || "").toLowerCase();
+        const match = !query || hay.includes(query);
+        n.style.display = match ? "" : "none";
+      });
+    }
+
+    searchInput.addEventListener("input", () => applyFilter(searchInput.value));
   }
 
   function setupContact() {
     if (!contactForm) return;
-
-    // Troque pelo seu e-mail real:
-    const DEST_EMAIL = "bruno@advir.org";
-
     contactForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const fd = new FormData(contactForm);
       const name = String(fd.get("name") || "").trim();
       const email = String(fd.get("email") || "").trim();
-      const message = String(fd.get("message") || "").trim();
+      const msg = String(fd.get("message") || "").trim();
 
-      const subject = encodeURIComponent(`[Portfólio] Mensagem de ${name}`);
-      const body = encodeURIComponent(
-        `Nome: ${name}\nE-mail: ${email}\n\nMensagem:\n${message}\n`
-      );
-
+      const subject = encodeURIComponent(`[Portfólio] ${name}`);
+      const body = encodeURIComponent(`Nome: ${name}\nE-mail: ${email}\n\nMensagem:\n${msg}\n`);
       window.location.href = `mailto:${DEST_EMAIL}?subject=${subject}&body=${body}`;
     });
   }
 
   setupTheme();
   setupYear();
-  setupReveal();
-  setupCounters();
-  setupNav();
+  setupMenu();
+  setupSearch();
   setupContact();
 })();
