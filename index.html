@@ -3,759 +3,1021 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ADVIR — Field Operations & Service Network</title>
-  <meta name="description" content="Rede humanitária e educacional de atuação discreta e responsável. Operações de serviço, apoio comunitário e proteção de pessoas em contextos sensíveis." />
+  <title>ADVIR | Field Service Operations</title>
+  <meta name="description" content="Portal institucional (template) para rede humanitária e educacional em contexto sensível. Layout limpo, navy, com carrossel e menu dropdown." />
   <style>
     :root{
-      --bg:#0b0f14;
-      --panel:#0f1620;
-      --panel2:#0c121a;
-      --text:#e7eef7;
-      --muted:#a9b7c7;
-      --line:#1f2a39;
-      --accent:#d8b25c;
-      --accent2:#7aa6ff;
-      --danger:#ff6b6b;
-      --ok:#59d18f;
-      --shadow:0 18px 40px rgba(0,0,0,.35);
-      --radius:16px;
-      --max:1120px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --navy:#0b2a4a;
+      --navy-2:#123a61;
+      --blue:#1877f2;
+      --ink:#0f172a;
+      --muted:#5b6777;
+      --bg:#ffffff;
+      --panel:#f5f7fb;
+      --line:#e6ebf3;
+      --shadow: 0 10px 24px rgba(15, 23, 42, .10);
+      --shadow2: 0 14px 38px rgba(15, 23, 42, .14);
+      --radius: 14px;
+      --max: 1160px;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
+
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
       font-family:var(--sans);
-      color:var(--text);
-      background:
-        radial-gradient(1200px 700px at 70% -10%, rgba(122,166,255,.14), transparent 55%),
-        radial-gradient(900px 600px at 20% 10%, rgba(216,178,92,.12), transparent 55%),
-        linear-gradient(180deg, #070a0f 0%, var(--bg) 35%, #070a0f 100%);
-      letter-spacing:.2px;
+      color:var(--ink);
+      background:var(--bg);
     }
     a{color:inherit; text-decoration:none}
     .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
-    .topbar{
-      position:sticky; top:0; z-index:50;
-      background:rgba(7,10,15,.78);
+
+    /* Top utility bar */
+    .utility{
+      background: var(--navy);
+      color: rgba(255,255,255,.92);
+      font-size: 12px;
+    }
+    .utility-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 10px 0;
+      gap: 10px;
+    }
+    .utility-left{display:flex; gap:14px; flex-wrap:wrap; align-items:center}
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.16);
+    }
+    .dot{width:8px; height:8px; border-radius:999px; background:#35c98a}
+    .utility-right{display:flex; gap:10px; align-items:center}
+    .mini-link{
+      color: rgba(255,255,255,.86);
+      padding: 4px 8px;
+      border-radius: 8px;
+    }
+    .mini-link:hover{background: rgba(255,255,255,.10)}
+
+    /* Main header */
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,.92);
       backdrop-filter: blur(10px);
-      border-bottom:1px solid rgba(31,42,57,.55);
+      border-bottom: 1px solid var(--line);
     }
-    .topbar-inner{
-      display:flex; align-items:center; gap:14px;
-      padding:14px 0;
+    .header-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 0;
+      gap: 14px;
     }
+
+    /* Brand left */
     .brand{
-      display:flex; align-items:center; gap:12px; min-width:230px;
+      display:flex; align-items:center; gap:12px;
+      min-width: 260px;
     }
-    .mark{
-      width:38px; height:38px; border-radius:12px;
+    .seal{
+      width: 42px; height: 42px;
+      border-radius: 14px;
       background:
-        radial-gradient(circle at 30% 30%, rgba(216,178,92,.22), transparent 55%),
-        linear-gradient(135deg, rgba(122,166,255,.28), rgba(216,178,92,.18));
-      border:1px solid rgba(216,178,92,.22);
-      box-shadow:0 10px 20px rgba(0,0,0,.25);
-      position:relative; overflow:hidden;
+        radial-gradient(circle at 30% 35%, rgba(24,119,242,.22), transparent 60%),
+        linear-gradient(135deg, rgba(11,42,74,.95), rgba(18,58,97,.92));
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow:hidden;
     }
-    .mark:after{
+    .seal:after{
       content:"";
-      position:absolute; inset:-40%;
+      position:absolute; inset:-50%;
       background: repeating-linear-gradient(
         45deg,
-        rgba(255,255,255,.08) 0px,
-        rgba(255,255,255,.08) 6px,
+        rgba(255,255,255,.10) 0px,
+        rgba(255,255,255,.10) 6px,
         transparent 6px,
         transparent 12px
       );
-      transform: rotate(10deg);
+      transform: rotate(12deg);
       opacity:.25;
     }
-    .brand h1{font-size:14px; margin:0; letter-spacing:.8px}
-    .brand p{margin:2px 0 0; font-size:12px; color:var(--muted)}
-    nav{
-      display:flex; align-items:center; gap:12px;
-      flex:1; flex-wrap:wrap;
+    .brand strong{
+      display:block;
+      font-size: 13px;
+      letter-spacing: .7px;
+      color: var(--navy);
     }
-    .navlink{
-      font-size:13px; color:var(--muted);
-      padding:8px 10px; border-radius:999px;
-      border:1px solid transparent;
-    }
-    .navlink:hover{
-      color:var(--text);
-      border-color:rgba(31,42,57,.9);
-      background:rgba(15,22,32,.55);
-    }
-    .actions{display:flex; align-items:center; gap:10px}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:8px;
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid rgba(31,42,57,.95);
-      background:rgba(15,22,32,.55);
-      color:var(--text);
-      font-size:13px;
-      cursor:pointer;
-      user-select:none;
-    }
-    .btn:hover{background:rgba(15,22,32,.85)}
-    .btn.primary{
-      border-color:rgba(216,178,92,.45);
-      background:linear-gradient(180deg, rgba(216,178,92,.18), rgba(15,22,32,.65));
-    }
-    .btn.danger{
-      border-color:rgba(255,107,107,.45);
-      background:linear-gradient(180deg, rgba(255,107,107,.14), rgba(15,22,32,.65));
-    }
-    .kbd{
-      font-family:var(--mono);
-      font-size:11px; color:rgba(231,238,247,.78);
-      padding:2px 6px;
-      border:1px solid rgba(31,42,57,.95);
-      border-bottom-color: rgba(31,42,57,.55);
-      border-radius:7px;
-      background:rgba(12,18,26,.7);
+    .brand span{
+      display:block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
     }
 
+    /* Nav (desktop) */
+    nav{display:flex; align-items:center; gap:8px; flex:1}
+    .nav-item{
+      position: relative;
+    }
+    .nav-btn{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 10px 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      color: #243046;
+      border: 1px solid transparent;
+      cursor: default;
+      user-select:none;
+    }
+    .nav-btn:hover{
+      background: #f3f6fb;
+      border-color: var(--line);
+      color: var(--navy);
+    }
+    .caret{
+      width:0; height:0;
+      border-left:5px solid transparent;
+      border-right:5px solid transparent;
+      border-top:6px solid #5b6777;
+      opacity:.9;
+      margin-top: 2px;
+    }
+    .nav-item:hover .caret{border-top-color: var(--navy)}
+    .dropdown{
+      position:absolute;
+      top: 44px;
+      left: 0;
+      min-width: 320px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow2);
+      padding: 10px;
+      display:none;
+    }
+    .nav-item:hover .dropdown{display:block}
+    .drop-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    .drop-link{
+      display:flex; gap:10px; align-items:flex-start;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+    }
+    .drop-link:hover{
+      background: #f3f6fb;
+      border-color: var(--line);
+    }
+    .icon{
+      width: 34px; height: 34px;
+      border-radius: 12px;
+      background: #eef4ff;
+      border: 1px solid #dbe7ff;
+      display:grid; place-items:center;
+      color: var(--blue);
+      font-weight: 700;
+      flex: 0 0 auto;
+    }
+    .drop-link strong{display:block; font-size:13px; color: var(--navy)}
+    .drop-link span{display:block; font-size:12px; color: var(--muted); line-height:1.35; margin-top:2px}
+
+    /* Right logo area */
+    .right{
+      display:flex; align-items:center; gap:10px;
+      justify-content:flex-end;
+      min-width: 280px;
+    }
+    .search{
+      display:flex; align-items:center; gap:8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 9px 10px;
+      border-radius: 999px;
+      min-width: 210px;
+    }
+    .search input{
+      border:0; outline:none; width:100%;
+      font-size: 13px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background:#fff;
+      font-size: 13px;
+      cursor:pointer;
+    }
+    .btn.primary{
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+    .btn:hover{box-shadow: 0 6px 18px rgba(15,23,42,.08)}
+    .logo-box{
+      width: 82px; height: 38px;
+      border-radius: 12px;
+      border: 1px dashed #c7d3e3;
+      background: #f7f9fd;
+      display:grid; place-items:center;
+      color: #6b7a90;
+      font-size: 12px;
+      padding: 0 6px;
+      text-align:center;
+      line-height:1.1;
+    }
+
+    /* Mobile nav */
+    .hamburger{display:none}
+    .mobile-panel{
+      display:none;
+      border-top: 1px solid var(--line);
+      background: #fff;
+      padding: 10px 0 14px;
+    }
+    .mobile-panel a{
+      display:block;
+      padding: 10px 0;
+      color: #243046;
+      border-bottom: 1px solid #f0f3f8;
+    }
+
+    /* Hero carousel */
     .hero{
-      padding:52px 0 24px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff 0%, #f7f9fd 100%);
     }
     .hero-grid{
       display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:22px;
-      align-items:stretch;
+      grid-template-columns: 1.35fr .65fr;
+      gap: 16px;
+      padding: 18px 0 22px;
+      align-items: stretch;
     }
-    .headline{
-      border:1px solid rgba(31,42,57,.85);
+    .carousel{
       border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(15,22,32,.72), rgba(12,18,26,.62));
-      box-shadow: var(--shadow);
-      padding:22px;
-      position:relative;
       overflow:hidden;
+      position: relative;
+      box-shadow: var(--shadow2);
+      border: 1px solid var(--line);
+      min-height: 360px;
+      background: #eaf0fb;
     }
-    .headline:before{
+    .slides{
+      display:flex;
+      width: 100%;
+      height: 100%;
+      transition: transform .6s ease;
+    }
+    .slide{
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+      display:flex;
+      align-items:flex-end;
+      justify-content:flex-start;
+    }
+    .slide::before{
       content:"";
       position:absolute; inset:0;
-      background:
-        radial-gradient(700px 260px at 60% 0%, rgba(122,166,255,.18), transparent 60%),
-        radial-gradient(480px 220px at 10% 15%, rgba(216,178,92,.16), transparent 60%);
-      pointer-events:none;
+      background: linear-gradient(90deg, rgba(11,42,74,.72) 0%, rgba(11,42,74,.18) 55%, rgba(11,42,74,0) 78%);
+      z-index:1;
     }
-    .tag{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(31,42,57,.85);
-      background:rgba(12,18,26,.55);
-      color:var(--muted);
-      font-size:12px;
+    .slide img{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit: cover;
+      filter: saturate(1.05) contrast(1.02);
+    }
+    .caption{
       position:relative;
+      z-index:2;
+      padding: 22px 22px 18px;
+      max-width: 620px;
+      color: #fff;
     }
-    .dot{
-      width:8px; height:8px; border-radius:999px;
-      background:var(--ok);
-      box-shadow:0 0 0 4px rgba(89,209,143,.12);
-    }
-    .headline h2{
-      margin:14px 0 10px;
-      font-size:40px;
-      line-height:1.05;
+    .caption .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.18);
+      font-size: 12px;
       letter-spacing: .4px;
-      position:relative;
     }
-    .headline p{
-      margin:0 0 18px;
-      color:var(--muted);
-      font-size:15px;
-      line-height:1.6;
-      position:relative;
+    .caption h1{
+      margin: 12px 0 8px;
+      font-size: 38px;
+      line-height: 1.05;
+      letter-spacing: .2px;
     }
-    .disclaimer{
-      margin-top:14px;
-      padding:12px 12px;
-      border-radius:12px;
-      border:1px dashed rgba(216,178,92,.35);
-      background:rgba(216,178,92,.06);
-      color:rgba(231,238,247,.82);
-      font-size:12px;
-      line-height:1.45;
-      position:relative;
+    .caption p{
+      margin: 0 0 12px;
+      font-size: 14px;
+      line-height: 1.55;
+      color: rgba(255,255,255,.88);
     }
-    .side{
-      border:1px solid rgba(31,42,57,.85);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(12,18,26,.82), rgba(15,22,32,.62));
-      box-shadow: var(--shadow);
-      padding:18px;
-      display:flex; flex-direction:column; gap:12px;
+    .hero-cta{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top: 10px;
     }
-    .side h3{margin:0; font-size:14px; color:rgba(231,238,247,.92); letter-spacing:.6px}
-    .side p{margin:0; color:var(--muted); font-size:13px; line-height:1.55}
-    .mini{
-      display:flex; gap:12px; align-items:flex-start;
-      border-top:1px solid rgba(31,42,57,.75);
-      padding-top:12px;
-    }
-    .glyph{
-      width:40px; height:40px; border-radius:14px;
-      border:1px solid rgba(31,42,57,.95);
-      background:rgba(15,22,32,.6);
-      display:grid; place-items:center;
-      font-family:var(--mono);
-      color:rgba(216,178,92,.9);
-      flex:0 0 auto;
-    }
-    .mini strong{display:block; font-size:13px; margin-bottom:2px}
-    .mini span{display:block; font-size:12px; color:var(--muted); line-height:1.45}
+    .hero-cta .btn{border-color: rgba(255,255,255,.24); background: rgba(255,255,255,.10); color:#fff}
+    .hero-cta .btn.primary{background: var(--blue); border-color: var(--blue)}
 
-    .section{padding:22px 0}
-    .section h2{
-      margin:0 0 12px;
-      font-size:18px;
-      letter-spacing:.6px;
+    .car-controls{
+      position:absolute;
+      inset: 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 0 12px;
+      pointer-events:none;
+      z-index:3;
+    }
+    .car-btn{
+      pointer-events:auto;
+      width: 40px; height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.10);
+      color:#fff;
+      cursor:pointer;
+      display:grid; place-items:center;
+    }
+    .car-btn:hover{background: rgba(255,255,255,.18)}
+    .dots{
+      position:absolute;
+      bottom: 12px;
+      right: 14px;
+      display:flex;
+      gap: 7px;
+      z-index:4;
+    }
+    .dotbtn{
+      width: 9px; height: 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.35);
+      background: rgba(255,255,255,.20);
+      cursor:pointer;
+    }
+    .dotbtn.active{
+      background:#fff;
+      border-color:#fff;
+    }
+
+    /* Right hero panel */
+    .brief{
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: var(--shadow);
+      padding: 16px;
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+    }
+    .brief h2{
+      margin:0;
+      font-size: 14px;
+      letter-spacing: .6px;
+      color: var(--navy);
+    }
+    .brief p{margin:0; color: var(--muted); font-size: 13px; line-height:1.55}
+    .brief .line{
+      border-top: 1px solid #f0f3f8;
+      padding-top: 12px;
+      margin-top: 4px;
+    }
+    .brief .item{
+      display:flex; gap:10px; align-items:flex-start;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+    }
+    .brief .item:hover{
+      border-color: var(--line);
+      background: #f7f9fd;
+    }
+    .brief .item strong{display:block; font-size: 13px; color: #243046}
+    .brief .item span{display:block; font-size: 12px; color: var(--muted); line-height:1.4; margin-top:2px}
+
+    /* Sections */
+    section{padding: 34px 0}
+    .section-title{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+      margin-bottom: 14px;
+    }
+    .section-title h2{
+      margin:0;
+      font-size: 18px;
+      letter-spacing: .6px;
+      color: var(--navy);
+    }
+    .section-title p{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
     }
     .grid{
       display:grid;
       grid-template-columns: repeat(12, 1fr);
-      gap:14px;
+      gap: 14px;
     }
     .card{
       grid-column: span 4;
-      border:1px solid rgba(31,42,57,.85);
+      border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: rgba(15,22,32,.55);
-      padding:16px;
-      box-shadow: 0 10px 26px rgba(0,0,0,.22);
-      position:relative;
-      overflow:hidden;
-      min-height: 168px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      padding: 16px;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      min-height: 170px;
     }
-    .card:before{
-      content:"";
-      position:absolute; inset:0;
-      background: radial-gradient(480px 220px at 20% 0%, rgba(122,166,255,.12), transparent 55%);
-      opacity:.9;
-      pointer-events:none;
-    }
-    .card h3{margin:0 0 8px; font-size:15px; letter-spacing:.4px; position:relative}
-    .card p{margin:0 0 14px; color:var(--muted); font-size:13px; line-height:1.55; position:relative}
-    .card .meta{
-      display:flex; gap:8px; flex-wrap:wrap; position:relative;
+    .card h3{margin:0; font-size: 15px; color:#243046}
+    .card p{margin:0; font-size: 13px; color: var(--muted); line-height: 1.55}
+    .meta{
+      display:flex; gap:8px; flex-wrap:wrap;
+      margin-top:auto;
+      padding-top: 12px;
+      border-top: 1px solid #f0f3f8;
     }
     .pill{
-      font-size:11px;
-      color:rgba(231,238,247,.78);
-      border:1px solid rgba(31,42,57,.95);
-      background:rgba(12,18,26,.55);
-      padding:4px 8px;
-      border-radius:999px;
-      font-family:var(--mono);
-    }
-    .linkrow{
-      margin-top:12px;
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      border-top:1px solid rgba(31,42,57,.75);
-      padding-top:12px;
-      position:relative;
-    }
-    .link{
-      color:rgba(231,238,247,.92);
-      font-size:13px;
-      display:inline-flex; align-items:center; gap:10px;
-    }
-    .arrow{
-      width:22px; height:22px; border-radius:999px;
-      border:1px solid rgba(31,42,57,.95);
-      display:grid; place-items:center;
-      color:rgba(216,178,92,.95);
-      background:rgba(12,18,26,.6);
-      font-family:var(--mono);
+      font-size: 11px;
+      color: #3e4c63;
+      background: #f3f6fb;
+      border: 1px solid #e7edf7;
+      padding: 4px 8px;
+      border-radius: 999px;
     }
 
     .two-col{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap:14px;
+      gap: 14px;
     }
     .panel{
-      border:1px solid rgba(31,42,57,.85);
+      border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: rgba(12,18,26,.55);
-      padding:16px;
-      box-shadow: 0 10px 26px rgba(0,0,0,.22);
+      background: #fff;
+      box-shadow: var(--shadow);
+      padding: 16px;
     }
-    .panel h3{margin:0 0 8px; font-size:15px; letter-spacing:.4px}
-    .panel p{margin:0 0 10px; color:var(--muted); font-size:13px; line-height:1.6}
-    .list{margin:0; padding-left:18px; color:rgba(231,238,247,.86)}
-    .list li{margin:6px 0; color:rgba(231,238,247,.82)}
-    .list li span{color:var(--muted)}
+    .panel h3{margin:0 0 8px; font-size: 15px; color:#243046}
+    .panel p{margin:0 0 10px; font-size:13px; color: var(--muted); line-height: 1.6}
+    .list{margin:0; padding-left: 18px}
+    .list li{margin: 7px 0; color:#334155}
+    .list li span{color: var(--muted)}
 
+    /* Footer */
     footer{
-      border-top:1px solid rgba(31,42,57,.75);
-      padding:22px 0 38px;
-      color:var(--muted);
-      font-size:12px;
-      background:rgba(7,10,15,.5);
-      margin-top:22px;
+      border-top: 1px solid var(--line);
+      background: #f7f9fd;
+      padding: 26px 0 34px;
+      color: var(--muted);
+      font-size: 12px;
     }
-    footer .footgrid{
+    .footgrid{
       display:grid;
       grid-template-columns: 1.2fr .8fr;
-      gap:14px;
+      gap: 14px;
       align-items:start;
     }
     .footlinks{
       display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
     }
     .footlinks a{
-      padding:6px 10px;
-      border:1px solid rgba(31,42,57,.85);
-      border-radius:999px;
-      color:var(--muted);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #e6ebf3;
+      background:#fff;
     }
-    .footlinks a:hover{color:var(--text); background:rgba(15,22,32,.55)}
+    .footlinks a:hover{box-shadow: 0 6px 18px rgba(15,23,42,.08); color: var(--navy)}
 
     /* Modal */
     .modal{
       position:fixed; inset:0;
       display:none;
       align-items:center; justify-content:center;
-      background:rgba(0,0,0,.6);
+      background: rgba(15,23,42,.45);
       backdrop-filter: blur(6px);
-      z-index:100;
-      padding:18px;
+      z-index: 120;
+      padding: 18px;
     }
     .modal.open{display:flex}
     .modalbox{
-      width:min(720px, 100%);
-      border-radius:18px;
-      border:1px solid rgba(31,42,57,.95);
-      background: linear-gradient(180deg, rgba(15,22,32,.88), rgba(12,18,26,.82));
-      box-shadow: var(--shadow);
+      width: min(760px, 100%);
+      border-radius: 16px;
+      background:#fff;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow2);
       overflow:hidden;
     }
     .modalhead{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding:14px 14px;
-      border-bottom:1px solid rgba(31,42,57,.75);
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
     }
-    .modalhead strong{letter-spacing:.6px; font-size:13px}
-    .close{cursor:pointer}
-    .modalbody{padding:14px}
-    .field{display:flex; flex-direction:column; gap:6px; margin-bottom:12px}
-    label{font-size:12px; color:rgba(231,238,247,.85)}
+    .modalhead strong{color: var(--navy); letter-spacing:.5px; font-size: 13px}
+    .modalbody{padding: 14px}
+    label{display:block; font-size: 12px; color:#334155; margin-bottom: 6px}
     input, textarea, select{
-      border-radius:12px;
-      border:1px solid rgba(31,42,57,.95);
-      background:rgba(12,18,26,.6);
-      color:var(--text);
-      padding:10px 10px;
-      font-size:13px;
-      outline:none;
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 10px;
+      font-size: 13px;
+      outline: none;
+      background:#fff;
     }
-    textarea{min-height:120px; resize:vertical}
-    .row{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
-    .hint{font-size:12px; color:var(--muted); line-height:1.5}
-    .toast{
-      position:fixed; left:18px; bottom:18px; z-index:120;
-      display:none;
-      max-width:min(520px, calc(100% - 36px));
-      border:1px solid rgba(31,42,57,.95);
-      background:rgba(12,18,26,.86);
-      padding:12px 12px;
-      border-radius:14px;
-      box-shadow: var(--shadow);
-      color:rgba(231,238,247,.9);
-      font-size:13px;
-    }
-    .toast.show{display:block}
+    textarea{min-height: 120px; resize: vertical}
+    .row{display:grid; grid-template-columns: 1fr 1fr; gap: 12px}
+    .hint{font-size: 12px; color: var(--muted); line-height: 1.45}
 
+    /* Responsive */
     @media (max-width: 980px){
+      nav{display:none}
+      .hamburger{display:inline-flex}
+      .right{min-width:auto}
+      .search{display:none}
       .hero-grid{grid-template-columns: 1fr}
+      .carousel{min-height: 320px}
       .card{grid-column: span 12}
       .two-col{grid-template-columns: 1fr}
-      .brand{min-width:auto}
-      nav{display:none}
+      .footgrid{grid-template-columns: 1fr}
+      .footlinks{justify-content:flex-start}
     }
   </style>
 </head>
+
 <body>
-  <header class="topbar">
-    <div class="wrap topbar-inner">
-      <a class="brand" href="#top" aria-label="ADVIR Home">
-        <div class="mark" aria-hidden="true"></div>
+  <div class="utility">
+    <div class="wrap utility-inner">
+      <div class="utility-left">
+        <span class="badge"><span class="dot"></span> Network Status: Active Service</span>
+        <span class="badge">Humanitarian • Education • Safeguarding</span>
+      </div>
+      <div class="utility-right">
+        <a class="mini-link" href="#resources">Library</a>
+        <a class="mini-link" href="#contact">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="wrap header-inner">
+      <a class="brand" href="#top" aria-label="Home">
+        <div class="seal" aria-hidden="true"></div>
         <div>
-          <h1>ADVIR — Field Operations</h1>
-          <p>Service Network • Middle East • Training • Safeguarding</p>
+          <strong>ADVIR | Field Service Operations</strong>
+          <span>Institutional portal template • Middle East focus</span>
         </div>
       </a>
 
-      <nav aria-label="Primary">
-        <a class="navlink" href="#about">About</a>
-        <a class="navlink" href="#operations">Operations</a>
-        <a class="navlink" href="#fieldnotes">Field Notes</a>
-        <a class="navlink" href="#opportunities">Opportunities</a>
-        <a class="navlink" href="#resources">Resources</a>
-        <a class="navlink" href="#contact">Contact</a>
+      <nav aria-label="Primary navigation">
+        <div class="nav-item">
+          <div class="nav-btn">Agency <span class="caret" aria-hidden="true"></span></div>
+          <div class="dropdown" role="menu">
+            <div class="drop-grid">
+              <a class="drop-link" href="#about" role="menuitem">
+                <div class="icon">A</div>
+                <div>
+                  <strong>About</strong>
+                  <span>Propósito, governança e princípios de atuação.</span>
+                </div>
+              </a>
+              <a class="drop-link" href="#standards" role="menuitem">
+                <div class="icon">S</div>
+                <div>
+                  <strong>Standards</strong>
+                  <span>Safeguarding, privacidade e transparência operacional.</span>
+                </div>
+              </a>
+              <a class="drop-link" href="#updates" role="menuitem">
+                <div class="icon">U</div>
+                <div>
+                  <strong>Updates</strong>
+                  <span>Boletins públicos não sensíveis e lições aprendidas.</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <div class="nav-btn">Operations <span class="caret" aria-hidden="true"></span></div>
+          <div class="dropdown" role="menu">
+            <div class="drop-grid">
+              <a class="drop-link" href="#operations" role="menuitem">
+                <div class="icon">O</div>
+                <div>
+                  <strong>Operational Model</strong>
+                  <span>Assess → Verify → Coordinate → Document → Review.</span>
+                </div>
+              </a>
+              <a class="drop-link" href="#programs" role="menuitem">
+                <div class="icon">P</div>
+                <div>
+                  <strong>Programs</strong>
+                  <span>Educação, saúde, assistência familiar, logística.</span>
+                </div>
+              </a>
+              <a class="drop-link" href="#opportunities" role="menuitem">
+                <div class="icon">R</div>
+                <div>
+                  <strong>Roles</strong>
+                  <span>Voluntariado e funções de suporte (com vetting).</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <div class="nav-btn">Resources <span class="caret" aria-hidden="true"></span></div>
+          <div class="dropdown" role="menu">
+            <div class="drop-grid">
+              <a class="drop-link" href="#resources" role="menuitem">
+                <div class="icon">L</div>
+                <div>
+                  <strong>Library</strong>
+                  <span>Templates, checklists e materiais de treinamento.</span>
+                </div>
+              </a>
+              <a class="drop-link" href="#contact" role="menuitem">
+                <div class="icon">C</div>
+                <div>
+                  <strong>Secure Contact</strong>
+                  <span>Canal institucional de contato (modelo).</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <a class="nav-btn" href="#contact" style="cursor:pointer">Contact</a>
       </nav>
 
-      <div class="actions">
-        <button class="btn" id="openSearch" title="Search (Ctrl/⌘ K)">
-          Search <span class="kbd">Ctrl K</span>
-        </button>
-        <button class="btn danger" id="openReport" title="Safeguarding / Report">
-          Report a Concern
-        </button>
+      <div class="right">
+        <div class="search" aria-label="Search">
+          <span style="color:#8b98ad; font-size:13px">Search</span>
+          <input id="searchInput" placeholder="Safeguarding, education, logistics..." />
+        </div>
+        <button class="btn hamburger" id="menuBtn" aria-label="Open menu">Menu</button>
+        <button class="btn primary" id="openBriefBtn">Request Brief</button>
+        <div class="logo-box" title="Coloque sua marca aqui">
+          Logo<br/>Right
+        </div>
       </div>
+    </div>
+
+    <div class="wrap mobile-panel" id="mobilePanel" aria-label="Mobile menu">
+      <a href="#about">Agency</a>
+      <a href="#operations">Operations</a>
+      <a href="#updates">Updates</a>
+      <a href="#programs">Programs</a>
+      <a href="#resources">Library</a>
+      <a href="#contact">Contact</a>
     </div>
   </header>
 
   <main id="top">
     <section class="hero">
       <div class="wrap hero-grid">
-        <div class="headline">
-          <span class="tag"><span class="dot"></span> Active Service • Quiet Presence • Accountable Methods</span>
-          <h2>We are a first line of care where visibility is limited.</h2>
-          <p>
-            ADVIR is a humanitarian and educational service network operating in sensitive environments.
-            We gather <strong>community needs</strong>, verify information responsibly, and coordinate practical support
-            through local partnerships—prioritizing dignity, safety, and transparency.
-          </p>
+        <div class="carousel" aria-label="Header carousel">
+          <div class="slides" id="slides">
+            <!-- Você pode trocar as imagens aqui por URLs suas -->
+            <div class="slide">
+              <img alt="Mountain corridor" src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1800&q=80" />
+              <div class="caption">
+                <div class="kicker">Public Service Network • Verified Delivery</div>
+                <h1>Quiet presence. Practical outcomes.</h1>
+                <p>Rede de serviço humanitário e educacional com foco em necessidades verificadas e salvaguarda.</p>
+                <div class="hero-cta">
+                  <a class="btn primary" href="#operations">Explore Operations</a>
+                  <button class="btn" id="openContactBtn">Secure Contact</button>
+                </div>
+              </div>
+            </div>
 
-          <div class="disclaimer" role="note">
-            <strong>Notice:</strong> This is a fictional/demo institutional website template for a humanitarian network.
-            It is <strong>not</strong> affiliated with any government, intelligence agency, or official public authority.
-            Content is illustrative and should be adapted to real compliance, privacy, and safeguarding rules.
+            <div class="slide">
+              <img alt="Desert road" src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1800&q=80" />
+              <div class="caption">
+                <div class="kicker">Education • Care • Logistics</div>
+                <h1>Support where access is limited.</h1>
+                <p>Coordenação local, documentação mínima e rotas de atendimento com responsabilidade.</p>
+                <div class="hero-cta">
+                  <a class="btn primary" href="#programs">View Programs</a>
+                  <button class="btn" id="openReportBtn">Report a Concern</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="slide">
+              <img alt="City skyline" src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=1800&q=80" />
+              <div class="caption">
+                <div class="kicker">Standards • Accountability • Safeguarding</div>
+                <h1>Integrity before visibility.</h1>
+                <p>Materiais públicos, políticas de privacidade e trilhas de auditoria para reduzir risco e dano.</p>
+                <div class="hero-cta">
+                  <a class="btn primary" href="#standards">Read Standards</a>
+                  <a class="btn" href="#updates">Field Updates</a>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; position:relative">
-            <a class="btn primary" href="#operations">Explore Operations</a>
-            <a class="btn" href="#opportunities">Join a Support Role</a>
-            <button class="btn" id="openBrief">Request a Brief</button>
+          <div class="car-controls" aria-hidden="true">
+            <button class="car-btn" id="prevBtn" title="Previous">‹</button>
+            <button class="car-btn" id="nextBtn" title="Next">›</button>
           </div>
+
+          <div class="dots" id="dots" aria-label="Carousel dots"></div>
         </div>
 
-        <aside class="side" aria-label="Status and quick items">
-          <h3>Today’s Brief</h3>
-          <p>
-            Focus areas: refugee education, clinic logistics, translation support, and safeguarding audits.
-            Data collection is limited to what is necessary for service delivery.
-          </p>
+        <aside class="brief" aria-label="Right brief panel">
+          <h2>Today’s Brief (Public)</h2>
+          <p>Resumo institucional (modelo). Conteúdo aqui deve ser público e não sensível.</p>
 
-          <div class="mini">
-            <div class="glyph" aria-hidden="true">A</div>
-            <div>
-              <strong>Agency</strong>
-              <span>Governance, ethics, privacy, and local partnerships.</span>
+          <div class="line">
+            <div class="item">
+              <div class="icon" style="width:34px;height:34px;border-radius:12px">N</div>
+              <div>
+                <strong>Needs Assessment</strong>
+                <span>Escuta comunitária, categorização de demanda e risco.</span>
+              </div>
             </div>
-          </div>
-          <div class="mini">
-            <div class="glyph" aria-hidden="true">O</div>
-            <div>
-              <strong>Operations</strong>
-              <span>Needs assessment, verification, distribution, follow-up.</span>
+            <div class="item">
+              <div class="icon" style="width:34px;height:34px;border-radius:12px">V</div>
+              <div>
+                <strong>Verification</strong>
+                <span>Checagem com parceiros locais, redução de ruído e boatos.</span>
+              </div>
             </div>
-          </div>
-          <div class="mini">
-            <div class="glyph" aria-hidden="true">R</div>
-            <div>
-              <strong>Resources</strong>
-              <span>Training, language, security hygiene, safeguarding.</span>
+            <div class="item">
+              <div class="icon" style="width:34px;height:34px;border-radius:12px">S</div>
+              <div>
+                <strong>Safeguarding</strong>
+                <span>Rotas de reporte, vetting e resposta orientada a vítima.</span>
+              </div>
             </div>
           </div>
 
-          <button class="btn primary" id="openContact" style="margin-top:auto">Secure Contact</button>
-          <p style="margin-top:6px; font-size:12px; color:var(--muted)">
-            Tip: Use minimal personal data. Share only what is necessary.
+          <button class="btn primary" id="openApplyBtn">Register Interest</button>
+          <button class="btn" id="openLibraryBtn">Open Library</button>
+
+          <p class="hint">
+            Aviso: template institucional fictício. Não afiliado a governo ou agência pública.
           </p>
         </aside>
       </div>
     </section>
 
-    <section class="section" id="about">
+    <section id="about">
       <div class="wrap">
-        <h2>Our Agency</h2>
+        <div class="section-title">
+          <div>
+            <h2>Agency</h2>
+            <p>Propósito, governança e princípios.</p>
+          </div>
+        </div>
+
         <div class="grid">
           <article class="card">
-            <h3>Mission & Vision</h3>
-            <p>Support vulnerable communities through education, health assistance, and disaster response, with disciplined verification and compassionate delivery.</p>
+            <h3>Mission</h3>
+            <p>Entregar apoio prático (educação, cuidado e logística) com foco em necessidades verificadas e redução de dano.</p>
             <div class="meta">
-              <span class="pill">principles: dignity</span>
-              <span class="pill">method: verify</span>
-              <span class="pill">goal: restore</span>
-            </div>
-            <div class="linkrow">
-              <a class="link" href="#resources">Learn our standards</a>
-              <span class="arrow">→</span>
+              <span class="pill">dignity</span><span class="pill">verify</span><span class="pill">restore</span>
             </div>
           </article>
 
           <article class="card">
-            <h3>Leadership & Governance</h3>
-            <p>Small, accountable structure. Independent safeguarding review. Local partner councils inform priorities and cultural considerations.</p>
+            <h3>Governance</h3>
+            <p>Estrutura enxuta com revisão independente de salvaguarda, trilhas de auditoria e controle de acesso.</p>
             <div class="meta">
-              <span class="pill">oversight</span>
-              <span class="pill">safeguarding</span>
-              <span class="pill">audit trails</span>
-            </div>
-            <div class="linkrow">
-              <a class="link" href="#contact">Contact governance</a>
-              <span class="arrow">→</span>
+              <span class="pill">oversight</span><span class="pill">audit</span><span class="pill">risk review</span>
             </div>
           </article>
 
           <article class="card">
-            <h3>Organization</h3>
-            <p>Field cells coordinate with logistics, education, and care teams. Information is handled on a strict need-to-know basis for safety and privacy.</p>
+            <h3>Public Transparency</h3>
+            <p>Publicações não sensíveis: lições aprendidas, métricas agregadas e padrões de integridade.</p>
             <div class="meta">
-              <span class="pill">field teams</span>
-              <span class="pill">logistics</span>
-              <span class="pill">education</span>
-            </div>
-            <div class="linkrow">
-              <a class="link" href="#operations">See operations</a>
-              <span class="arrow">→</span>
+              <span class="pill">public notes</span><span class="pill">aggregates</span><span class="pill">ethics</span>
             </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="operations">
+    <section id="standards" style="background: var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
       <div class="wrap">
-        <h2>Operations</h2>
-        <div class="two-col">
-          <div class="panel">
-            <h3>Operational Model (Non-technical)</h3>
-            <p>
-              Our work follows a humanitarian “information cycle” focused on <strong>needs</strong>, not surveillance.
-              We collect and validate reports to reduce harm and deliver assistance efficiently.
-            </p>
-            <ul class="list">
-              <li><strong>Assess:</strong> <span>listen to community requests; map needs and risks.</span></li>
-              <li><strong>Verify:</strong> <span>cross-check with local partners; avoid rumor propagation.</span></li>
-              <li><strong>Coordinate:</strong> <span>match needs with capacity; schedule distribution and follow-up.</span></li>
-              <li><strong>Document:</strong> <span>record only what is necessary; protect identities by default.</span></li>
-              <li><strong>Review:</strong> <span>continuous safeguarding and ethics checks.</span></li>
-            </ul>
-          </div>
-
-          <div class="panel">
-            <h3>Active Lines of Service</h3>
-            <p>Representative focus areas commonly requested across the region.</p>
-            <ul class="list">
-              <li><strong>Education Access:</strong> <span>mobile lessons, literacy support, materials distribution.</span></li>
-              <li><strong>Health Support:</strong> <span>clinic supply routing, translation, appointment coordination.</span></li>
-              <li><strong>Family Relief:</strong> <span>food parcels, winter kits, emergency referrals.</span></li>
-              <li><strong>Legal Navigation:</strong> <span>trusted referrals for documentation and safe travel guidance.</span></li>
-              <li><strong>Safeguarding:</strong> <span>child protection, abuse reporting routes, volunteer vetting.</span></li>
-            </ul>
-            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
-              <button class="btn primary" id="openOps">Request operational brief</button>
-              <a class="btn" href="#resources">Training & standards</a>
-            </div>
+        <div class="section-title">
+          <div>
+            <h2>Standards</h2>
+            <p>Salvaguarda, privacidade e integridade (alto nível).</p>
           </div>
         </div>
 
-        <div class="grid" style="margin-top:14px">
-          <article class="card">
-            <h3>Partner With ADVIR</h3>
-            <p>We collaborate with local educators, clinics, and relief coordinators. Partnership requires safeguarding alignment and confidentiality discipline.</p>
-            <div class="meta">
-              <span class="pill">local-first</span>
-              <span class="pill">compliance</span>
-              <span class="pill">risk-aware</span>
-            </div>
-            <div class="linkrow">
-              <button class="btn" id="openPartner">Start partner intake</button>
-              <span class="arrow">→</span>
-            </div>
-          </article>
-
-          <article class="card">
-            <h3>Technology</h3>
-            <p>Secure-by-default tooling for schedules, inventory, and reports. We avoid collecting sensitive data unless strictly necessary and lawful.</p>
-            <div class="meta">
-              <span class="pill">minimize data</span>
-              <span class="pill">encrypt</span>
-              <span class="pill">audit</span>
-            </div>
-            <div class="linkrow">
-              <a class="link" href="#resources">See guidance</a>
-              <span class="arrow">→</span>
-            </div>
-          </article>
-
-          <article class="card">
+        <div class="two-col">
+          <div class="panel">
+            <h3>Safeguarding</h3>
+            <p>Protocolos para reduzir risco a beneficiários e voluntários.</p>
+            <ul class="list">
+              <li><strong>Report routes:</strong> <span>canais claros para denúncias e incidentes.</span></li>
+              <li><strong>Vetting:</strong> <span>verificação de referências e adequação.</span></li>
+              <li><strong>Victim-first:</strong> <span>prioriza segurança e dignidade.</span></li>
+            </ul>
+          </div>
+          <div class="panel">
             <h3>Privacy</h3>
-            <p>Information is handled with consent where possible. Incident reports follow safeguarding policies and may be escalated to appropriate authorities.</p>
-            <div class="meta">
-              <span class="pill">purpose-limited</span>
-              <span class="pill">confidential</span>
-              <span class="pill">reviewable</span>
-            </div>
-            <div class="linkrow">
-              <button class="btn" id="openPrivacy">Read policy summary</button>
-              <span class="arrow">→</span>
-            </div>
-          </article>
+            <p>Minimização de dados e controle de acesso.</p>
+            <ul class="list">
+              <li><strong>Minimal data:</strong> <span>coletar apenas o necessário para o serviço.</span></li>
+              <li><strong>Access control:</strong> <span>need-to-know e logs de auditoria.</span></li>
+              <li><strong>Retention:</strong> <span>limites de retenção e descarte.</span></li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="fieldnotes">
+    <section id="operations">
       <div class="wrap">
-        <h2>Field Notes</h2>
+        <div class="section-title">
+          <div>
+            <h2>Operations</h2>
+            <p>Modelo operacional focado em serviço, não em vigilância.</p>
+          </div>
+        </div>
+
         <div class="grid">
           <article class="card">
-            <h3>Logistics Under Constraint</h3>
-            <p>How small routing changes improved delivery reliability without expanding data collection. Focus: inventory discipline and verification.</p>
-            <div class="meta">
-              <span class="pill">logistics</span>
-              <span class="pill">verification</span>
-              <span class="pill">winter kits</span>
-            </div>
-            <div class="linkrow">
-              <button class="btn" data-note="logistics">Read note</button>
-              <span class="arrow">→</span>
-            </div>
+            <h3>Assess</h3>
+            <p>Mapear demandas reais com escuta local estruturada, sem coleta excessiva de dados pessoais.</p>
+            <div class="meta"><span class="pill">needs</span><span class="pill">risk</span><span class="pill">context</span></div>
           </article>
 
           <article class="card">
-            <h3>Education in Temporary Shelters</h3>
-            <p>Low-bandwidth lesson packs, multilingual scaffolding, and trauma-aware instruction. Focus: continuity and safeguarding.</p>
-            <div class="meta">
-              <span class="pill">education</span>
-              <span class="pill">languages</span>
-              <span class="pill">safeguarding</span>
-            </div>
-            <div class="linkrow">
-              <button class="btn" data-note="education">Read note</button>
-              <span class="arrow">→</span>
-            </div>
+            <h3>Verify</h3>
+            <p>Cruzamento de informação com parceiros locais e checagem de consistência antes de agir.</p>
+            <div class="meta"><span class="pill">cross-check</span><span class="pill">partners</span><span class="pill">accuracy</span></div>
           </article>
 
           <article class="card">
-            <h3>Integrity & Reporting</h3>
-            <p>Practical guidelines for handling allegations, conflicts of interest, and donor transparency—without endangering beneficiaries.</p>
-            <div class="meta">
-              <span class="pill">integrity</span>
-              <span class="pill">risk</span>
-              <span class="pill">transparency</span>
-            </div>
-            <div class="linkrow">
-              <button class="btn" data-note="integrity">Read note</button>
-              <span class="arrow">→</span>
-            </div>
+            <h3>Coordinate</h3>
+            <p>Distribuição, logística e acompanhamento, com documentação mínima e trilha de responsabilidade.</p>
+            <div class="meta"><span class="pill">logistics</span><span class="pill">follow-up</span><span class="pill">accountability</span></div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="opportunities">
+    <section id="updates" style="background: var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
       <div class="wrap">
-        <h2>Opportunities</h2>
+        <div class="section-title">
+          <div>
+            <h2>Field Updates</h2>
+            <p>Notas públicas (modelo) com foco em resultados e boas práticas.</p>
+          </div>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <h3>Education Continuity</h3>
+            <p>Pacotes de aula low-bandwidth, suporte multilíngue e rotas de proteção infantil.</p>
+            <div class="meta"><span class="pill">education</span><span class="pill">languages</span><span class="pill">safeguarding</span></div>
+          </article>
+          <article class="card">
+            <h3>Clinic Routing</h3>
+            <p>Aprimoramento de roteamento de insumos e registros agregados para reduzir desperdício.</p>
+            <div class="meta"><span class="pill">health</span><span class="pill">inventory</span><span class="pill">verification</span></div>
+          </article>
+          <article class="card">
+            <h3>Integrity Controls</h3>
+            <p>Checklist anti-fraude, conflitos de interesse e trilhas de auditoria para doações.</p>
+            <div class="meta"><span class="pill">integrity</span><span class="pill">audit</span><span class="pill">donor</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="programs">
+      <div class="wrap">
+        <div class="section-title">
+          <div>
+            <h2>Programs</h2>
+            <p>Linhas de serviço comuns (modelo).</p>
+          </div>
+        </div>
+
         <div class="two-col">
           <div class="panel">
-            <h3>Roles (Volunteer / Professional)</h3>
-            <p>Open roles depend on region and partner capacity. All roles require training and safeguarding vetting.</p>
+            <h3>Active Lines</h3>
             <ul class="list">
-              <li><strong>Translation & Mediation:</strong> <span>Arabic/English/Portuguese support.</span></li>
-              <li><strong>Education Support:</strong> <span>lesson design, tutoring, teacher training.</span></li>
-              <li><strong>Logistics:</strong> <span>inventory, scheduling, documentation discipline.</span></li>
-              <li><strong>Care Coordination:</strong> <span>referrals, follow-up, welfare checks.</span></li>
+              <li><strong>Education access:</strong> <span>reforço, alfabetização, materiais.</span></li>
+              <li><strong>Health support:</strong> <span>tradução, encaminhamentos, logística de insumos.</span></li>
+              <li><strong>Family relief:</strong> <span>kits essenciais e suporte sazonal.</span></li>
+              <li><strong>Safeguarding:</strong> <span>rotas de reporte e resposta disciplinada.</span></li>
             </ul>
-            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
-              <button class="btn primary" id="openApply">Apply / Register interest</button>
-              <a class="btn" href="#resources">Training materials</a>
-            </div>
           </div>
-
           <div class="panel">
-            <h3>Hiring Process (Summary)</h3>
-            <p>High-level steps only; details vary by region and legal requirements.</p>
+            <h3>How We Report</h3>
+            <p>Somente conteúdo público e agregado. Nada operacional sensível.</p>
             <ul class="list">
-              <li><strong>Screening:</strong> <span>identity and references, conflict-of-interest check.</span></li>
-              <li><strong>Training:</strong> <span>safeguarding, privacy, cultural sensitivity, role-specific protocols.</span></li>
-              <li><strong>Placement:</strong> <span>local partner confirmation and risk review.</span></li>
-              <li><strong>Ongoing Review:</strong> <span>performance feedback and audit trails.</span></li>
+              <li><strong>Aggregate metrics:</strong> <span>quantitativos por categoria, sem identificar pessoas.</span></li>
+              <li><strong>Lessons learned:</strong> <span>melhorias de processo e padrões de segurança.</span></li>
+              <li><strong>Partner acknowledgements:</strong> <span>quando for seguro e apropriado.</span></li>
             </ul>
-            <p class="hint">We do not provide advice on evasion, covert tradecraft, or activities that could cause harm.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="resources">
+    <section id="opportunities" style="background: var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
       <div class="wrap">
-        <h2>Library</h2>
+        <div class="section-title">
+          <div>
+            <h2>Opportunities</h2>
+            <p>Funções de suporte (com vetting e treinamento).</p>
+          </div>
+        </div>
+
         <div class="grid">
           <article class="card">
-            <h3>Resources</h3>
-            <p>Templates and checklists for needs assessment, distribution logs, and follow-up notes (minimal data by default).</p>
-            <div class="meta">
-              <span class="pill">templates</span><span class="pill">checklists</span><span class="pill">minimal-data</span>
-            </div>
-            <div class="linkrow">
-              <button class="btn" id="openResources">Open library</button>
-              <span class="arrow">→</span>
-            </div>
+            <h3>Translation & Mediation</h3>
+            <p>Suporte multilíngue para comunicação institucional e acompanhamento de beneficiários.</p>
+            <div class="meta"><span class="pill">languages</span><span class="pill">training</span><span class="pill">ethics</span></div>
           </article>
+          <article class="card">
+            <h3>Education Support</h3>
+            <p>Desenho de aulas, reforço, mentoria e apoio à formação docente.</p>
+            <div class="meta"><span class="pill">lesson design</span><span class="pill">literacy</span><span class="pill">care</span></div>
+          </article>
+          <article class="card">
+            <h3>Logistics & Records</h3>
+            <p>Inventário, distribuição e registros mínimos com trilha de auditoria.</p>
+            <div class="meta"><span class="pill">inventory</span><span class="pill">audit</span><span class="pill">process</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
 
+    <section id="resources">
+      <div class="wrap">
+        <div class="section-title">
+          <div>
+            <h2>Library</h2>
+            <p>Materiais e templates (modelo).</p>
+          </div>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <h3>Templates</h3>
+            <p>Needs assessment, distribuição, follow-up e checklist de salvaguarda.</p>
+            <div class="meta"><span class="pill">forms</span><span class="pill">checklists</span><span class="pill">minimal data</span></div>
+          </article>
           <article class="card">
             <h3>Training</h3>
-            <p>Safeguarding, privacy basics, cultural humility, and incident response routes for volunteers and staff.</p>
-            <div class="meta">
-              <span class="pill">safeguarding</span><span class="pill">privacy</span><span class="pill">culture</span>
-            </div>
-            <div class="linkrow">
-              <button class="btn" id="openTraining">View modules</button>
-              <span class="arrow">→</span>
-            </div>
+            <p>Privacidade, salvaguarda, integridade e comunicação institucional.</p>
+            <div class="meta"><span class="pill">modules</span><span class="pill">policy</span><span class="pill">practice</span></div>
           </article>
-
           <article class="card">
             <h3>Publications</h3>
-            <p>Non-sensitive field summaries focused on outcomes, accountability, and lessons learned.</p>
-            <div class="meta">
-              <span class="pill">outcomes</span><span class="pill">accountability</span><span class="pill">lessons</span>
-            </div>
-            <div class="linkrow">
-              <button class="btn" id="openPublications">Browse</button>
-              <span class="arrow">→</span>
-            </div>
+            <p>Relatórios agregados e lições aprendidas, sem detalhes sensíveis.</p>
+            <div class="meta"><span class="pill">public</span><span class="pill">aggregates</span><span class="pill">lessons</span></div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="contact">
+    <section id="contact" style="background: var(--panel); border-top:1px solid var(--line);">
       <div class="wrap">
-        <h2>Contact</h2>
+        <div class="section-title">
+          <div>
+            <h2>Contact</h2>
+            <p>Canal institucional (modelo). Evite dados sensíveis.</p>
+          </div>
+        </div>
+
         <div class="two-col">
           <div class="panel">
             <h3>Secure Contact</h3>
-            <p>Use this channel for partnership inquiries, volunteer interest, or general questions. Do not include sensitive personal data.</p>
-            <div style="display:flex; gap:10px; flex-wrap:wrap">
-              <button class="btn primary" id="openContact2">Open contact form</button>
-              <button class="btn danger" id="openReport2">Report a Concern</button>
-            </div>
-            <p class="hint" style="margin-top:10px">
-              If there is immediate danger, contact local emergency services first.
-            </p>
+            <p>Parcerias, dúvidas e interesse em suporte. Não inclua identificadores pessoais desnecessários.</p>
+            <button class="btn primary" id="openContactModal">Open Contact Form</button>
           </div>
           <div class="panel">
-            <h3>Site Policies</h3>
-            <p>High-level policies for this template. Replace with your organization’s legal documents.</p>
-            <ul class="list">
-              <li><strong>Privacy:</strong> <span>data minimization, access control, retention limits.</span></li>
-              <li><strong>Safeguarding:</strong> <span>mandatory reporting paths and victim-first handling.</span></li>
-              <li><strong>Integrity:</strong> <span>anti-fraud, donor transparency, audit readiness.</span></li>
-            </ul>
+            <h3>Report a Concern</h3>
+            <p>Safeguarding, conduta inadequada, incidente de privacidade (modelo). Em risco imediato, contate emergências locais.</p>
+            <button class="btn" id="openReportModal">Open Report Form</button>
           </div>
         </div>
       </div>
@@ -765,10 +1027,10 @@
   <footer>
     <div class="wrap footgrid">
       <div>
-        <strong style="color:rgba(231,238,247,.92); letter-spacing:.6px">ADVIR — Field Operations Template</strong>
+        <strong style="color: var(--navy); letter-spacing:.6px">ADVIR | Institutional Portal Template</strong>
         <p style="margin:8px 0 0; line-height:1.6">
-          Institutional-style demo site for a humanitarian network. Not affiliated with any government or intelligence service.
-          Adapt content to your real policies, jurisdiction, and safeguarding standards.
+          Template fictício para site institucional humanitário. Não afiliado a governo ou agência pública.
+          Troque imagens, textos e políticas por conteúdo real e juridicamente adequado.
         </p>
       </div>
       <div class="footlinks">
@@ -786,19 +1048,77 @@
     <div class="modalbox">
       <div class="modalhead">
         <strong id="modalTitle">Dialog</strong>
-        <button class="btn close" id="closeModal">Close <span class="kbd">Esc</span></button>
+        <button class="btn" id="closeModal">Close</button>
       </div>
       <div class="modalbody" id="modalBody"></div>
     </div>
   </div>
 
-  <div class="toast" id="toast"></div>
-
   <script>
+    /* Mobile menu */
+    const menuBtn = document.getElementById('menuBtn');
+    const mobilePanel = document.getElementById('mobilePanel');
+    if(menuBtn){
+      menuBtn.addEventListener('click', () => {
+        const open = mobilePanel.style.display === 'block';
+        mobilePanel.style.display = open ? 'none' : 'block';
+      });
+    }
+
+    /* Carousel */
+    const slides = document.getElementById('slides');
+    const slideEls = Array.from(slides.querySelectorAll('.slide'));
+    const dotsWrap = document.getElementById('dots');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let idx = 0;
+    let timer = null;
+
+    function renderDots(){
+      dotsWrap.innerHTML = '';
+      slideEls.forEach((_, i) => {
+        const b = document.createElement('button');
+        b.className = 'dotbtn' + (i === idx ? ' active' : '');
+        b.setAttribute('aria-label', 'Go to slide ' + (i+1));
+        b.addEventListener('click', () => { go(i, true); });
+        dotsWrap.appendChild(b);
+      });
+    }
+
+    function go(i, userAction){
+      idx = (i + slideEls.length) % slideEls.length;
+      slides.style.transform = 'translateX(' + (-idx * 100) + '%)';
+      renderDots();
+      if(userAction) restart();
+    }
+
+    function next(){ go(idx + 1, true); }
+    function prev(){ go(idx - 1, true); }
+
+    function start(){
+      stop();
+      timer = setInterval(() => { go(idx + 1, false); }, 6500);
+    }
+    function stop(){
+      if(timer) clearInterval(timer);
+      timer = null;
+    }
+    function restart(){
+      start();
+    }
+
+    prevBtn.addEventListener('click', prev);
+    nextBtn.addEventListener('click', next);
+
+    renderDots();
+    start();
+
+    /* Modal helpers */
     const modal = document.getElementById('modal');
     const modalTitle = document.getElementById('modalTitle');
     const modalBody = document.getElementById('modalBody');
-    const toast = document.getElementById('toast');
+    const closeModalBtn = document.getElementById('closeModal');
 
     function openModal(title, html){
       modalTitle.textContent = title;
@@ -811,72 +1131,27 @@
       modal.classList.remove('open');
       modalBody.innerHTML = '';
     }
-    function showToast(msg){
-      toast.textContent = msg;
-      toast.classList.add('show');
-      setTimeout(()=>toast.classList.remove('show'), 3200);
-    }
+    closeModalBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+    window.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
 
-    document.getElementById('closeModal').addEventListener('click', closeModal);
-    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
-    window.addEventListener('keydown', (e)=>{
-      if(e.key === 'Escape' && modal.classList.contains('open')) closeModal();
-      if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){
-        e.preventDefault();
-        openSearch();
-      }
-    });
-
-    function openSearch(){
-      openModal('Search', `
-        <div class="field">
-          <label for="q">Search ADVIR</label>
-          <input id="q" placeholder="Type keywords (e.g., safeguarding, logistics, education)..." />
-          <div class="hint">This demo search is local-only and does not transmit data.</div>
-        </div>
-        <button class="btn primary" id="doSearch">Search</button>
-        <div id="results" style="margin-top:12px"></div>
-      `);
-      const q = modalBody.querySelector('#q');
-      const results = modalBody.querySelector('#results');
-      const corpus = [
-        {k:'safeguarding', t:'Safeguarding & Reporting Routes', s:'Guidelines for safe handling and escalation.'},
-        {k:'privacy', t:'Privacy & Data Minimization', s:'Collect only what is necessary; protect identities.'},
-        {k:'logistics', t:'Logistics Under Constraint', s:'Routing, inventory, and verification discipline.'},
-        {k:'education', t:'Education in Temporary Shelters', s:'Low-bandwidth lessons and multilingual scaffolding.'},
-        {k:'integrity', t:'Integrity & Reporting', s:'Anti-fraud, accountability, and beneficiary safety.'},
-      ];
-      modalBody.querySelector('#doSearch').addEventListener('click', ()=>{
-        const term = (q.value || '').trim().toLowerCase();
-        if(!term){ results.innerHTML = '<p class="hint">Enter a keyword.</p>'; return; }
-        const hits = corpus.filter(x => x.k.includes(term) || x.t.toLowerCase().includes(term));
-        results.innerHTML = hits.length
-          ? hits.map(h => `
-              <div style="border:1px solid rgba(31,42,57,.75); border-radius:14px; padding:12px; margin:10px 0; background:rgba(12,18,26,.45)">
-                <strong style="display:block; margin-bottom:4px">${h.t}</strong>
-                <span class="hint">${h.s}</span>
-              </div>
-            `).join('')
-          : '<p class="hint">No results found in this demo.</p>';
-      });
-    }
-
-    function formHTML(kind){
-      const title = kind === 'report' ? 'Report a Concern (Safeguarding)' : 'Secure Contact';
-      const note = kind === 'report'
-        ? 'Use this form for safeguarding concerns, misconduct, or risk to beneficiaries. Do not include unnecessary sensitive data.'
-        : 'Use this form for partnerships, volunteering, or general questions. Keep data minimal.';
+    function contactForm(kind){
+      const isReport = kind === 'report';
       return `
-        <p class="hint">${note}</p>
+        <p class="hint">${isReport
+          ? 'Use para salvaguarda, conduta inadequada ou incidente de privacidade. Evite detalhes sensíveis desnecessários.'
+          : 'Use para parcerias, dúvidas e interesse em suporte. Mantenha dados mínimos.'}
+        </p>
+
         <div class="row">
-          <div class="field">
+          <div>
             <label>Topic</label>
             <select id="topic">
-              ${kind === 'report' ? `
+              ${isReport ? `
                 <option>Safeguarding concern</option>
-                <option>Misconduct / integrity</option>
-                <option>Security risk to beneficiaries</option>
-                <option>Data/privacy incident</option>
+                <option>Integrity / misconduct</option>
+                <option>Privacy incident</option>
+                <option>Other risk</option>
               ` : `
                 <option>Partnership inquiry</option>
                 <option>Volunteer interest</option>
@@ -885,265 +1160,189 @@
               `}
             </select>
           </div>
-          <div class="field">
+          <div>
             <label>Region (optional)</label>
-            <input id="region" placeholder="Country / area (optional)" />
+            <input id="region" placeholder="Country / area" />
           </div>
         </div>
-        <div class="field">
+
+        <div style="margin-top:12px">
           <label>Message</label>
-          <textarea id="msg" placeholder="Describe the situation / request. Avoid names and sensitive identifiers unless strictly necessary."></textarea>
+          <textarea id="msg" placeholder="Descreva a situação/pedido. Evite nomes e identificadores pessoais, a menos que seja estritamente necessário."></textarea>
         </div>
-        <div class="row">
-          <div class="field">
+
+        <div class="row" style="margin-top:12px">
+          <div>
             <label>Contact (optional)</label>
-            <input id="contact" placeholder="Email or handle (optional)" />
+            <input id="contact" placeholder="Email or handle" />
           </div>
-          <div class="field">
+          <div>
             <label>Urgency</label>
             <select id="urgency">
               <option>Normal</option>
               <option>Time-sensitive</option>
-              <option>Immediate risk (contact local emergency services first)</option>
+              <option>Immediate risk (contact emergency services first)</option>
             </select>
           </div>
         </div>
-        <button class="btn primary" id="submit">${kind === 'report' ? 'Submit report' : 'Send message'}</button>
-        <p class="hint" style="margin-top:10px">Demo only: this does not send data anywhere. Replace with your backend endpoint.</p>
+
+        <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap">
+          <button class="btn primary" id="submitBtn">${isReport ? 'Submit report' : 'Send message'}</button>
+          <button class="btn" id="cancelBtn">Cancel</button>
+        </div>
+
+        <p class="hint" style="margin-top:10px">
+          Demo: este formulário não envia dados. Conecte a um backend seguro (HTTPS, autenticação, logs, retenção).
+        </p>
       `;
     }
 
-    function openContact(){
-      openModal('Secure Contact', formHTML('contact'));
-      modalBody.querySelector('#submit').addEventListener('click', ()=>{
+    function wireForm(){
+      const cancelBtn = modalBody.querySelector('#cancelBtn');
+      const submitBtn = modalBody.querySelector('#submitBtn');
+      cancelBtn.addEventListener('click', closeModal);
+      submitBtn.addEventListener('click', () => {
         closeModal();
-        showToast('Message captured locally (demo). Connect this form to your backend to send it.');
+        alert('Demo: mensagem registrada localmente (não enviada). Conecte o formulário a um backend.');
       });
     }
 
-    function openReport(){
-      openModal('Report a Concern (Safeguarding)', formHTML('report'));
-      modalBody.querySelector('#submit').addEventListener('click', ()=>{
-        closeModal();
-        showToast('Report captured locally (demo). Implement a secure reporting pipeline before real use.');
-      });
-    }
+    document.getElementById('openContactModal').addEventListener('click', () => {
+      openModal('Secure Contact', contactForm('contact'));
+      wireForm();
+    });
+    document.getElementById('openReportModal').addEventListener('click', () => {
+      openModal('Report a Concern', contactForm('report'));
+      wireForm();
+    });
 
-    function openBrief(){
-      openModal('Request a Brief', `
-        <p class="hint">Request a non-sensitive operational overview. This template intentionally avoids instructions that could cause harm.</p>
-        <div class="field">
-          <label>Audience</label>
-          <select id="aud">
-            <option>Donor / stakeholder</option>
-            <option>Volunteer candidate</option>
-            <option>Local partner</option>
-            <option>Internal</option>
-          </select>
+    document.getElementById('openContactBtn').addEventListener('click', () => {
+      openModal('Secure Contact', contactForm('contact'));
+      wireForm();
+    });
+    document.getElementById('openReportBtn').addEventListener('click', () => {
+      openModal('Report a Concern', contactForm('report'));
+      wireForm();
+    });
+
+    document.getElementById('openApplyBtn').addEventListener('click', () => {
+      openModal('Register Interest', `
+        <p class="hint">Registro de interesse (modelo). Use para iniciar o processo de vetting e treinamento.</p>
+        <div class="row">
+          <div>
+            <label>Area</label>
+            <select>
+              <option>Translation & mediation</option>
+              <option>Education support</option>
+              <option>Logistics & records</option>
+              <option>Care coordination</option>
+            </select>
+          </div>
+          <div>
+            <label>Availability</label>
+            <select>
+              <option>Remote support</option>
+              <option>Local partner</option>
+              <option>Hybrid</option>
+            </select>
+          </div>
         </div>
-        <div class="field">
-          <label>What do you need?</label>
-          <textarea id="need" placeholder="Example: accountability summary, safeguarding overview, training outline..."></textarea>
+        <div style="margin-top:12px">
+          <label>Message</label>
+          <textarea placeholder="Conte brevemente seu perfil e por que você quer ajudar."></textarea>
         </div>
-        <button class="btn primary" id="go">Generate brief outline</button>
-        <div id="out" style="margin-top:12px"></div>
+        <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap">
+          <button class="btn primary" id="okBtn">Submit</button>
+          <button class="btn" id="cancelBtn">Cancel</button>
+        </div>
+        <p class="hint" style="margin-top:10px">Demo: não envia dados.</p>
       `);
-      modalBody.querySelector('#go').addEventListener('click', ()=>{
+      modalBody.querySelector('#cancelBtn').addEventListener('click', closeModal);
+      modalBody.querySelector('#okBtn').addEventListener('click', () => { closeModal(); alert('Demo: enviado (não realmente).'); });
+    });
+
+    document.getElementById('openLibraryBtn').addEventListener('click', () => {
+      openModal('Library (Template)', `
+        <ul class="list">
+          <li><strong>Needs Assessment Form:</strong> <span>categorias, urgência, evidências mínimas.</span></li>
+          <li><strong>Distribution Log:</strong> <span>quantitativos, datas, parceiro responsável.</span></li>
+          <li><strong>Follow-up Note:</strong> <span>resultado e próximos passos (mínimo de dados).</span></li>
+          <li><strong>Safeguarding Checklist:</strong> <span>supervisão, reporte, conduta.</span></li>
+        </ul>
+        <div style="margin-top:14px">
+          <button class="btn primary" id="closeBtn">Close</button>
+        </div>
+      `);
+      modalBody.querySelector('#closeBtn').addEventListener('click', closeModal);
+    });
+
+    document.getElementById('openBriefBtn').addEventListener('click', () => {
+      openModal('Request Brief (Public)', `
+        <p class="hint">Brief público (modelo) sem conteúdo sensível.</p>
+        <div class="row">
+          <div>
+            <label>Audience</label>
+            <select>
+              <option>Donor / stakeholder</option>
+              <option>Volunteer candidate</option>
+              <option>Local partner</option>
+              <option>Internal</option>
+            </select>
+          </div>
+          <div>
+            <label>Focus</label>
+            <select>
+              <option>Safeguarding overview</option>
+              <option>Program summary</option>
+              <option>Accountability & metrics</option>
+              <option>Training outline</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-top:12px">
+          <label>Notes</label>
+          <textarea placeholder="O que você quer destacar?"></textarea>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap">
+          <button class="btn primary" id="genBtn">Generate outline</button>
+          <button class="btn" id="cancelBtn">Cancel</button>
+        </div>
+        <div id="out" style="margin-top:14px"></div>
+      `);
+
+      modalBody.querySelector('#cancelBtn').addEventListener('click', closeModal);
+      modalBody.querySelector('#genBtn').addEventListener('click', () => {
         const out = modalBody.querySelector('#out');
         out.innerHTML = `
-          <div style="border:1px solid rgba(31,42,57,.75); border-radius:14px; padding:12px; background:rgba(12,18,26,.45)">
-            <strong style="display:block; margin-bottom:6px">Brief Outline (Demo)</strong>
+          <div class="panel" style="box-shadow:none">
+            <h3 style="margin-top:0">Outline</h3>
             <ul class="list">
-              <li><strong>Purpose:</strong> <span>humanitarian service and community support.</span></li>
-              <li><strong>Safeguarding:</strong> <span>mandatory reporting routes, vetting, training.</span></li>
-              <li><strong>Data Handling:</strong> <span>minimal collection, access control, retention limits.</span></li>
+              <li><strong>Purpose:</strong> <span>humanitarian service and education support.</span></li>
+              <li><strong>Safeguarding:</strong> <span>report routes, vetting, training coverage.</span></li>
+              <li><strong>Privacy:</strong> <span>data minimization, access control, retention.</span></li>
               <li><strong>Operations:</strong> <span>assess → verify → coordinate → document → review.</span></li>
-              <li><strong>Accountability:</strong> <span>audits, partner councils, outcome reporting.</span></li>
+              <li><strong>Accountability:</strong> <span>audits and aggregated reporting.</span></li>
             </ul>
           </div>
         `;
       });
-    }
+    });
 
-    function openNote(kind){
-      const notes = {
-        logistics: {
-          t: 'Logistics Under Constraint',
-          b: `<p class="hint">Illustrative note focused on reliability and accountability.</p>
-              <ul class="list">
-                <li><strong>Problem:</strong> <span>deliveries delayed by inconsistent handoffs and duplicate records.</span></li>
-                <li><strong>Change:</strong> <span>single inventory ledger + verification checkpoints with partners.</span></li>
-                <li><strong>Result:</strong> <span>fewer losses, clearer follow-up, no expansion of personal data.</span></li>
-              </ul>`
-        },
-        education: {
-          t: 'Education in Temporary Shelters',
-          b: `<p class="hint">Illustrative note focused on continuity and safety.</p>
-              <ul class="list">
-                <li><strong>Approach:</strong> <span>low-bandwidth lesson packs and multilingual scaffolding.</span></li>
-                <li><strong>Safeguarding:</strong> <span>child protection rules, supervised sessions, referral routes.</span></li>
-                <li><strong>Outcome:</strong> <span>attendance stability and improved basic literacy in pilot groups.</span></li>
-              </ul>`
-        },
-        integrity: {
-          t: 'Integrity & Reporting',
-          b: `<p class="hint">Illustrative note focused on ethical reporting.</p>
-              <ul class="list">
-                <li><strong>Principle:</strong> <span>beneficiary safety over publicity.</span></li>
-                <li><strong>Controls:</strong> <span>conflict-of-interest declarations and audit trails.</span></li>
-                <li><strong>Reporting:</strong> <span>clear escalation paths; minimal sensitive details.</span></li>
-              </ul>`
+    /* Simple local search highlight (demo) */
+    const searchInput = document.getElementById('searchInput');
+    if(searchInput){
+      searchInput.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter'){
+          const term = (searchInput.value || '').trim().toLowerCase();
+          if(!term) return;
+          const targets = Array.from(document.querySelectorAll('h2,h3,p,li'));
+          const hit = targets.find(el => (el.textContent || '').toLowerCase().includes(term));
+          if(hit){
+            hit.scrollIntoView({behavior:'smooth', block:'center'});
+          }
         }
-      };
-      const n = notes[kind];
-      openModal(n.t, n.b + `<div style="margin-top:12px"><button class="btn primary" id="ok">Close</button></div>`);
-      modalBody.querySelector('#ok').addEventListener('click', closeModal);
+      });
     }
-
-    // Buttons
-    document.getElementById('openSearch').addEventListener('click', openSearch);
-    document.getElementById('openReport').addEventListener('click', openReport);
-    document.getElementById('openReport2').addEventListener('click', openReport);
-    document.getElementById('openContact').addEventListener('click', openContact);
-    document.getElementById('openContact2').addEventListener('click', openContact);
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-    document.getElementById('openOps').addEventListener('click', openBrief);
-    document.getElementById('openApply').addEventListener('click', openContact);
-    document.getElementById('openPartner').addEventListener('click', openContact);
-
-    document.getElementById('openPrivacy').addEventListener('click', ()=>{
-      openModal('Privacy Summary (Template)', `
-        <p class="hint">Replace with your actual legal policy. High-level summary only.</p>
-        <ul class="list">
-          <li><strong>Purpose limitation:</strong> <span>data used only to deliver service and ensure safeguarding.</span></li>
-          <li><strong>Minimization:</strong> <span>collect the least amount of personal data possible.</span></li>
-          <li><strong>Access control:</strong> <span>need-to-know; role-based permissions; audit logs.</span></li>
-          <li><strong>Retention:</strong> <span>keep data only as long as necessary for lawful purposes.</span></li>
-        </ul>
-      `);
-    });
-
-    document.getElementById('openResources').addEventListener('click', ()=>{
-      openModal('Resources (Template Library)', `
-        <p class="hint">Examples of items you can publish without exposing sensitive operations.</p>
-        <ul class="list">
-          <li><strong>Needs Assessment Form:</strong> <span>focus on categories; avoid personal identifiers.</span></li>
-          <li><strong>Distribution Log:</strong> <span>inventory counts, dates, partner sign-off.</span></li>
-          <li><strong>Follow-up Note:</strong> <span>outcomes and next steps; minimal data.</span></li>
-          <li><strong>Safeguarding Checklist:</strong> <span>supervision, reporting routes, vetting.</span></li>
-        </ul>
-      `);
-    });
-
-    document.getElementById('openTraining').addEventListener('click', ()=>{
-      openModal('Training Modules (Template)', `
-        <ul class="list">
-          <li><strong>Module 1:</strong> <span>Safeguarding fundamentals and reporting routes.</span></li>
-          <li><strong>Module 2:</strong> <span>Privacy and data minimization practices.</span></li>
-          <li><strong>Module 3:</strong> <span>Cultural humility and communication basics.</span></li>
-          <li><strong>Module 4:</strong> <span>Role discipline: documentation, handoffs, accountability.</span></li>
-        </ul>
-      `);
-    });
-
-    document.getElementById('openPublications').addEventListener('click', ()=>{
-      openModal('Publications (Template)', `
-        <p class="hint">Non-sensitive summaries only.</p>
-        <ul class="list">
-          <li><strong>Annual Outcomes Snapshot:</strong> <span>education and relief metrics, audited notes.</span></li>
-          <li><strong>Safeguarding Report:</strong> <span>training coverage, incident handling overview.</span></li>
-          <li><strong>Lessons Learned:</strong> <span>logistics reliability and partner coordination.</span></li>
-        </ul>
-      `);
-    });
-
-    document.querySelectorAll('[data-note]').forEach(btn=>{
-      btn.addEventListener('click', ()=>openNote(btn.getAttribute('data-note')));
-    });
-
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-    document.getElementById('openBrief').addEventListener('keydown', (e)=>{ if(e.key==='Enter') openBrief(); });
-
-    // Partner + Contact triggers
-    document.getElementById('openContact').addEventListener('click', openContact);
-
-    // Placeholder "Request a Brief" button on hero
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-
-    // Dedicated "Request a Brief" button
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-
-    // Secondary button
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-
-    // Hook hero "Request a Brief"
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-
-    // The hero button "Request a Brief" is #openBrief already; also connect the other CTA:
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-
-    // Hook up the "Request a Brief" in hero and sidebar:
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-
-    // Normalize duplicated listeners (safe to keep, but avoid noise in real code)
-    // (No-op)
-
-    // Wire the additional CTA
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-
-    // The separate button in hero
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-
-    // Request a brief button in hero is openBrief; "Request a Brief" in hero is openBrief; sidebar uses openContact.
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-
-    // Connect the "Request a Brief" button on hero (id openBrief) already.
-
-    // Connect the "Request a Brief" button labeled openBrief in hero to openBrief function:
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-
-    // Connect "Request a Brief" (button id openBrief) already; connect "Request a Brief" in hero (button id openBrief).
-    // Done.
-
-    // Hook "Request a Brief" in hero's second CTA:
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-
-    // Hook the hero third button (Request a Brief) is openBrief. The "Request a Brief" button we created earlier is openBrief.
-    // Done.
-
-    // Additional sidebar buttons
-    document.getElementById('openContact').addEventListener('click', openContact);
-
-    // Another CTA
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-
-    // Set up the separate "Request a Brief" button created as openBrief (already).
-    // Done.
-
-    // Hook hero "Request a Brief" (button id openBrief) again (already).
-    // Done.
-
-    // Hook "Request a Brief" for top CTA "Request a Brief" exists as #openBrief.
-    // Done.
-
-    // Extra
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-
-    // Connect the non-hero brief button:
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-
-    // One more: the "Request a Brief" is openBrief.
-    // Done.
-
-    // Ensure side button "Secure Contact" works:
-    document.getElementById('openContact').addEventListener('click', openContact);
-
-    // Hook up the "Request a Brief" button in hero (openBrief)
-    document.getElementById('openBrief').addEventListener('click', openBrief);
-
-    // Hook all "Request a Brief" duplications are harmless in demo.
   </script>
 </body>
 </html>
