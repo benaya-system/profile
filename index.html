@@ -3,424 +3,312 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Portfólio de Bruno — professor, cientista da computação e criador de soluções educacionais." />
+  <meta name="description" content="Portfólio — layout moderno inspirado em sites institucionais de grande porte." />
   <title>Bruno Agostinho • Portfólio</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <a class="skip" href="#main">Pular para o conteúdo</a>
 
   <header class="topbar" role="banner">
-    <div class="container topbar__inner">
+    <div class="wrap topbar__inner">
       <a class="brand" href="#home" aria-label="Ir para o topo">
         <span class="brand__mark" aria-hidden="true"></span>
-        <span class="brand__text">Bruno Agostinho</span>
+        <span class="brand__name">BRUNO • PORTFOLIO</span>
       </a>
 
-      <nav class="nav" aria-label="Navegação principal">
-        <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu">
-          <span class="nav__toggleLines" aria-hidden="true"></span>
-          <span class="sr-only">Abrir menu</span>
+      <div class="topbar__right">
+        <button class="iconBtn" id="searchBtn" type="button" aria-expanded="false" aria-controls="searchPanel">
+          Buscar
         </button>
-
-        <div class="nav__menu" id="navMenu">
-          <a class="nav__link" href="#projetos">Projetos</a>
-          <a class="nav__link" href="#skills">Skills</a>
-          <a class="nav__link" href="#aulas">Educação</a>
-          <a class="nav__link" href="#sobre">Sobre</a>
-          <a class="nav__link" href="#contato">Contato</a>
-          <button class="themeBtn" id="themeBtn" type="button" aria-label="Alternar tema">
-            <span class="themeBtn__icon" aria-hidden="true"></span>
-            <span class="themeBtn__text">Tema</span>
-          </button>
-        </div>
-      </nav>
+        <button class="iconBtn" id="themeBtn" type="button" aria-label="Alternar tema">Tema</button>
+        <button class="menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="megaNav">Menu</button>
+      </div>
     </div>
+
+    <!-- Search panel -->
+    <div class="searchPanel" id="searchPanel" hidden>
+      <div class="wrap searchPanel__inner">
+        <label class="searchField">
+          <span class="sr">Pesquisar</span>
+          <input id="searchInput" type="search" placeholder="Pesquisar no portfólio (atalho: /)" />
+        </label>
+        <div class="searchHint">
+          Dica: isso faz filtro local nos cards de “Stories” e “Projetos”.
+        </div>
+      </div>
+    </div>
+
+    <!-- Mega nav (CIA-style: categorias + colunas) -->
+    <nav class="megaNav" id="megaNav" aria-label="Navegação principal" hidden>
+      <div class="wrap megaNav__grid">
+        <section class="megaCol">
+          <div class="megaTitle">Hoje</div>
+          <a class="megaLink" href="#home">Visão geral</a>
+          <a class="megaLink" href="#destaques">Destaques</a>
+          <a class="megaLink" href="#projetos">Projetos</a>
+          <a class="megaLink" href="#contato">Contato</a>
+        </section>
+
+        <section class="megaCol">
+          <div class="megaTitle">Sobre</div>
+          <a class="megaLink" href="#sobre">Resumo</a>
+          <a class="megaLink" href="#valores">Missão & valores</a>
+          <a class="megaLink" href="#stack">Tecnologia</a>
+          <a class="megaLink" href="#metodo">Método</a>
+        </section>
+
+        <section class="megaCol">
+          <div class="megaTitle">Carreira</div>
+          <a class="megaLink" href="#skills">Skills</a>
+          <a class="megaLink" href="#cases">Estudos de caso</a>
+          <a class="megaLink" href="#cv">Currículo</a>
+          <a class="megaLink" href="#certs">Certificações</a>
+        </section>
+
+        <section class="megaCol">
+          <div class="megaTitle">Biblioteca</div>
+          <a class="megaLink" href="#stories">Stories</a>
+          <a class="megaLink" href="#publicacoes">Publicações</a>
+          <a class="megaLink" href="#materiais">Materiais</a>
+          <a class="megaLink" href="#repos">Repositórios</a>
+        </section>
+
+        <section class="megaCol megaCol--cta">
+          <div class="megaTitle">Acesso rápido</div>
+          <a class="btn btn--primary" href="#projetos">Ver projetos</a>
+          <a class="btn btn--ghost" href="#contato">Falar comigo</a>
+          <div class="mini">
+            Layout estático e rápido, ideal para GitHub Pages.
+          </div>
+        </section>
+      </div>
+    </nav>
   </header>
 
-  <main id="conteudo">
-    <!-- HERO -->
-    <section class="hero" id="home">
-      <div class="container hero__grid">
+  <main id="main">
+    <!-- HERO (headline forte em 3 linhas, estilo institucional) -->
+    <section class="hero" id="home" aria-label="Hero">
+      <div class="wrap hero__grid">
         <div class="hero__copy">
-          <div class="badgeRow">
-            <span class="badge">Professor • Computação</span>
-            <span class="badge badge--soft">IA aplicada • Educação</span>
-          </div>
-
+          <div class="eyebrow">Portfólio</div>
           <h1 class="hero__title">
-            Construo experiências digitais com foco em
-            <span class="gradText">aprendizado</span>,
-            <span class="gradText">automação</span> e
-            <span class="gradText">clareza</span>.
+            Eu construo<br />
+            sistemas que viram<br />
+            rotina confiável.
           </h1>
-
-          <p class="hero__subtitle">
-            Portfólio estático para GitHub Pages: moderno, rápido, acessível e fácil de manter.
-            Aqui eu mostro projetos, habilidades e minhas linhas de pesquisa e ensino.
+          <p class="hero__lead">
+            Foco em educação, automação e engenharia pragmática: dashboards, relatórios, bots, integrações e
+            experiências web com acabamento.
           </p>
 
-          <div class="hero__cta">
-            <a class="btn btn--primary" href="#projetos">Ver projetos</a>
-            <a class="btn btn--ghost" href="#contato">Falar comigo</a>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#projetos">Explorar projetos</a>
+            <a class="btn btn--ghost" href="#stories">Ler stories</a>
           </div>
 
-          <div class="hero__meta">
-            <div class="metaCard">
-              <div class="metaCard__k">Foco</div>
-              <div class="metaCard__v">Web Apps, IA, automações</div>
+          <div class="hero__stats" id="destaques">
+            <div class="stat">
+              <div class="stat__k">Entrega</div>
+              <div class="stat__v">Clareza e padrão</div>
             </div>
-            <div class="metaCard">
-              <div class="metaCard__k">Stack</div>
-              <div class="metaCard__v">JS, Python, Apps Script</div>
+            <div class="stat">
+              <div class="stat__k">Stack</div>
+              <div class="stat__v">JS • Python • Apps Script</div>
             </div>
-            <div class="metaCard">
-              <div class="metaCard__k">Valores</div>
-              <div class="metaCard__v">Didática, rigor, impacto</div>
+            <div class="stat">
+              <div class="stat__k">Foco</div>
+              <div class="stat__v">Web + automações</div>
             </div>
           </div>
         </div>
 
-        <aside class="hero__panel" aria-label="Destaques">
-          <div class="card card--glass">
-            <div class="card__top">
-              <div class="avatar" aria-hidden="true">
-                <!-- Se quiser usar foto: troque background-image via CSS .avatar -->
-              </div>
+        <aside class="hero__panel" aria-label="Cartão de identidade">
+          <div class="panelCard">
+            <div class="panelCard__top">
+              <div class="seal" aria-hidden="true"></div>
               <div>
-                <div class="card__title">Bruno Agostinho</div>
-                <div class="card__muted">Professor • Cientista da Computação</div>
+                <div class="panelCard__name">Bruno Agostinho</div>
+                <div class="panelCard__role">Professor • Computação • IA aplicada</div>
               </div>
             </div>
 
-            <div class="pillRow" aria-label="Destaques rápidos">
-              <span class="pill">CLIL</span>
-              <span class="pill">PBL</span>
-              <span class="pill">LLMs</span>
-              <span class="pill">RAG</span>
-              <span class="pill">Dashboards</span>
-            </div>
+            <div class="panelCard__line"></div>
 
-            <div class="card__divider"></div>
-
-            <div class="miniGrid">
-              <div class="miniStat">
-                <div class="miniStat__n" data-counter="12">0</div>
-                <div class="miniStat__l">Projetos publicados</div>
+            <div class="panelGrid">
+              <div class="panelItem">
+                <div class="panelItem__k">Disponível para</div>
+                <div class="panelItem__v">Projetos educacionais, dashboards, automação</div>
               </div>
-              <div class="miniStat">
-                <div class="miniStat__n" data-counter="5">0</div>
-                <div class="miniStat__l">Rotinas automatizadas</div>
-              </div>
-              <div class="miniStat">
-                <div class="miniStat__n" data-counter="3">0</div>
-                <div class="miniStat__l">Trilhas de ensino</div>
-              </div>
-              <div class="miniStat">
-                <div class="miniStat__n" data-counter="2">0</div>
-                <div class="miniStat__l">Anos em projetos educacionais</div>
+              <div class="panelItem">
+                <div class="panelItem__k">Prioridades</div>
+                <div class="panelItem__v">UX, performance, privacidade, manutenção</div>
               </div>
             </div>
 
-            <div class="card__divider"></div>
+            <div class="panelCard__line"></div>
 
-            <div class="quickLinks">
-              <a class="qLink" href="#" target="_blank" rel="noopener">GitHub</a>
-              <a class="qLink" href="#" target="_blank" rel="noopener">LinkedIn</a>
-              <a class="qLink" href="#" target="_blank" rel="noopener">Currículo (PDF)</a>
+            <div class="panelLinks">
+              <a href="#" target="_blank" rel="noopener">GitHub</a>
+              <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="#cv">CV</a>
             </div>
           </div>
 
-          <div class="card card--solid">
-            <div class="card__title">Agora</div>
-            <p class="card__muted">
-              Trabalhando em ferramentas para avaliação por competências, dashboards de desempenho e automações
-              para rotinas escolares, com foco em privacidade e usabilidade.
-            </p>
-            <div class="chips">
-              <span class="chip">Acessibilidade</span>
-              <span class="chip">LGPD</span>
-              <span class="chip">Design System</span>
-              <span class="chip">Performance</span>
-            </div>
+          <div class="panelNote">
+            Substitua “seal” por um ícone seu (não use logos de terceiros).
           </div>
         </aside>
       </div>
 
-      <div class="hero__bg" aria-hidden="true"></div>
+      <div class="hero__backdrop" aria-hidden="true"></div>
     </section>
 
-    <!-- PROJETOS -->
-    <section class="section" id="projetos">
-      <div class="container">
+    <!-- SECTION: CARDS grandes em 3 blocos (como “Our Agency / Careers / Our Legacy”) -->
+    <section class="section" id="projetos" aria-label="Projetos">
+      <div class="wrap">
         <div class="sectionHead">
-          <h2 class="sectionTitle">Projetos</h2>
-          <p class="sectionSubtitle">Seleção de trabalhos com foco em utilidade real e acabamento.</p>
+          <h2>Áreas</h2>
+          <p>Três frentes principais, no estilo institucional: descrição curta + CTA.</p>
         </div>
 
-        <div class="grid cards3">
-          <article class="projCard reveal">
-            <div class="projCard__top">
-              <div class="projIcon" aria-hidden="true"></div>
-              <div>
-                <h3 class="projCard__title">Dashboard de Competências</h3>
-                <p class="projCard__desc">
-                  Avaliação 0–10 por competência, relatórios e visão para coordenação.
-                </p>
-              </div>
-            </div>
-            <div class="tagRow">
-              <span class="tag">HTML/CSS/JS</span>
-              <span class="tag">Sheets</span>
-              <span class="tag">Apps Script</span>
-            </div>
-            <div class="projCard__actions">
-              <a class="btn btn--small btn--ghost" href="#" target="_blank" rel="noopener">Demo</a>
-              <a class="btn btn--small btn--primary" href="#" target="_blank" rel="noopener">Código</a>
-            </div>
+        <div class="areaGrid">
+          <article class="areaCard" data-search="dashboard competências avaliação relatório">
+            <div class="areaCard__icon"></div>
+            <h3>Produtos educacionais</h3>
+            <p>Dashboards, avaliação por competências, relatórios formativos e fluxos consistentes.</p>
+            <a class="areaCard__cta" href="#cases">Ver estudos de caso</a>
           </article>
 
-          <article class="projCard reveal">
-            <div class="projCard__top">
-              <div class="projIcon projIcon--2" aria-hidden="true"></div>
-              <div>
-                <h3 class="projCard__title">Relatórios Formativos</h3>
-                <p class="projCard__desc">
-                  Templates claros, linguagem neutra, e opção “sponsor view”.
-                </p>
-              </div>
-            </div>
-            <div class="tagRow">
-              <span class="tag">UX Writing</span>
-              <span class="tag">LGPD</span>
-              <span class="tag">PDF/HTML</span>
-            </div>
-            <div class="projCard__actions">
-              <a class="btn btn--small btn--ghost" href="#" target="_blank" rel="noopener">Demo</a>
-              <a class="btn btn--small btn--primary" href="#" target="_blank" rel="noopener">Código</a>
-            </div>
+          <article class="areaCard" data-search="automação bot whatsapp telegram integrações">
+            <div class="areaCard__icon areaCard__icon--2"></div>
+            <h3>Automação e integração</h3>
+            <p>Bots, roteamento, logs e ferramentas que reduzem trabalho manual e ruído.</p>
+            <a class="areaCard__cta" href="#repos">Ver repositórios</a>
           </article>
 
-          <article class="projCard reveal">
-            <div class="projCard__top">
-              <div class="projIcon projIcon--3" aria-hidden="true"></div>
-              <div>
-                <h3 class="projCard__title">Bots e Automação</h3>
-                <p class="projCard__desc">
-                  Fluxos com Telegram/WhatsApp, roteamento e logs operacionais.
-                </p>
-              </div>
-            </div>
-            <div class="tagRow">
-              <span class="tag">Node.js</span>
-              <span class="tag">Webhooks</span>
-              <span class="tag">Observabilidade</span>
-            </div>
-            <div class="projCard__actions">
-              <a class="btn btn--small btn--ghost" href="#" target="_blank" rel="noopener">Demo</a>
-              <a class="btn btn--small btn--primary" href="#" target="_blank" rel="noopener">Código</a>
-            </div>
-          </article>
-        </div>
-
-        <div class="sectionFoot">
-          <p class="hint">Edite os cards com seus projetos reais e troque “Demo/Código” pelos links.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section class="section section--alt" id="skills">
-      <div class="container">
-        <div class="sectionHead">
-          <h2 class="sectionTitle">Skills</h2>
-          <p class="sectionSubtitle">Ferramentas e práticas que eu uso para entregar com qualidade.</p>
-        </div>
-
-        <div class="grid cards2">
-          <article class="skillCard reveal">
-            <h3 class="skillCard__title">Engenharia</h3>
-            <ul class="list">
-              <li>Arquitetura simples e sustentável</li>
-              <li>Performance e SEO básico</li>
-              <li>Componentização e padrões</li>
-              <li>Automação e integrações</li>
-            </ul>
-          </article>
-
-          <article class="skillCard reveal">
-            <h3 class="skillCard__title">Educação</h3>
-            <ul class="list">
-              <li>CLIL + Bloom + PBL</li>
-              <li>Feedback formativo e rubricas</li>
-              <li>Material bilíngue com clareza</li>
-              <li>Design de atividades e avaliação</li>
-            </ul>
+          <article class="areaCard" data-search="ia llm rag pesquisa materiais ensino">
+            <div class="areaCard__icon areaCard__icon--3"></div>
+            <h3>IA aplicada ao ensino</h3>
+            <p>Materiais e sistemas para uso responsável de LLMs, RAG e alfabetização em IA.</p>
+            <a class="areaCard__cta" href="#materiais">Ver materiais</a>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- EDUCAÇÃO -->
-    <section class="section" id="aulas">
-      <div class="container">
-        <div class="sectionHead">
-          <h2 class="sectionTitle">Educação e Pesquisa</h2>
-          <p class="sectionSubtitle">O que eu ensino e o que eu estou investigando.</p>
+    <!-- STORIES (lista com “Read More”, bem parecido em fluxo) -->
+    <section class="section section--alt" id="stories" aria-label="Stories">
+      <div class="wrap">
+        <div class="sectionHead sectionHead--row">
+          <div>
+            <h2>Stories</h2>
+            <p>Entradas curtas (você pode linkar para páginas internas depois).</p>
+          </div>
+          <a class="btn btn--ghost" href="#publicacoes">Explorar tudo</a>
         </div>
 
-        <div class="timeline">
-          <div class="tItem reveal">
-            <div class="tDot" aria-hidden="true"></div>
-            <div class="tBody">
-              <div class="tTitle">LLMs e alfabetização em IA</div>
-              <div class="tText">
-                Conteúdos sobre tokens, contexto, limites, busca vs modelo e aplicações responsáveis.
-              </div>
-            </div>
-          </div>
+        <div class="storiesGrid" id="storiesGrid">
+          <article class="story" data-search="competências rubrica feedback formativo lgpd">
+            <div class="story__meta">Educação • Sistemas</div>
+            <h3 class="story__title">Como padronizar avaliação por competências sem travar o professor</h3>
+            <a class="story__more" href="#">Ler mais</a>
+          </article>
 
-          <div class="tItem reveal">
-            <div class="tDot" aria-hidden="true"></div>
-            <div class="tBody">
-              <div class="tTitle">Ferramentas para avaliação por competências</div>
-              <div class="tText">
-                Dashboards, relatórios e fluxos que reduzem trabalho manual e melhoram a consistência.
-              </div>
-            </div>
-          </div>
+          <article class="story" data-search="bots whatsapp telegram roteamento logs">
+            <div class="story__meta">Automação</div>
+            <h3 class="story__title">Roteamento de mensagens e resposta contextual: o que aprendi na prática</h3>
+            <a class="story__more" href="#">Ler mais</a>
+          </article>
 
-          <div class="tItem reveal">
-            <div class="tDot" aria-hidden="true"></div>
-            <div class="tBody">
-              <div class="tTitle">Automação de rotinas escolares</div>
-              <div class="tText">
-                Integrações com planilhas, formulários, e distribuição de conteúdo com rastreabilidade.
-              </div>
-            </div>
-          </div>
+          <article class="story" data-search="llm rag tokens contexto alfabetização ia">
+            <div class="story__meta">IA aplicada</div>
+            <h3 class="story__title">LLMs em sala: limites, contexto, busca e responsabilidade</h3>
+            <a class="story__more" href="#">Ler mais</a>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- SOBRE -->
-    <section class="section section--alt" id="sobre">
-      <div class="container about">
-        <div class="about__left">
+    <!-- SOBRE / VALORES / STACK -->
+    <section class="section" id="sobre" aria-label="Sobre">
+      <div class="wrap split">
+        <div>
           <div class="sectionHead">
-            <h2 class="sectionTitle">Sobre</h2>
-            <p class="sectionSubtitle">
-              Perfil analítico, foco em sistemas úteis, e estética limpa com bom acabamento.
-            </p>
+            <h2>Sobre</h2>
+            <p>Texto “institucional”, mas com sua identidade: objetivo, método e impacto.</p>
           </div>
 
-          <p class="para reveal">
-            Eu trabalho na interseção entre ensino e engenharia: construo ferramentas, materiais e fluxos
-            que deixam o processo mais claro para alunos e mais previsível para professores.
+          <p class="para" id="metodo">
+            Eu projeto e implemento soluções com foco em: clareza, manutenção e uso real.
+            Evito complexidade que não paga o custo e documento o suficiente para o projeto sobreviver.
           </p>
 
-          <p class="para reveal">
-            Este site é estático para ser rápido, barato e fácil de manter. Você pode expandir com mais páginas,
-            posts ou estudos de caso sem mudar a base.
-          </p>
-
-          <div class="about__metrics reveal">
-            <div class="metric">
-              <div class="metric__k">Abordagem</div>
-              <div class="metric__v">Rigor + pragmatismo</div>
-            </div>
-            <div class="metric">
-              <div class="metric__k">Entrega</div>
-              <div class="metric__v">Documentada e consistente</div>
-            </div>
-            <div class="metric">
-              <div class="metric__k">Preferência</div>
-              <div class="metric__v">Soluções simples e fortes</div>
-            </div>
+          <div class="pillRow" id="valores">
+            <span class="pill">Rigor</span>
+            <span class="pill">Pragmatismo</span>
+            <span class="pill">Didática</span>
+            <span class="pill">Privacidade</span>
+            <span class="pill">Performance</span>
           </div>
         </div>
 
-        <div class="about__right">
-          <div class="card card--solid reveal">
-            <h3 class="card__title">Stack preferida</h3>
-            <div class="stackGrid">
-              <div class="stackItem">JavaScript</div>
-              <div class="stackItem">Python</div>
-              <div class="stackItem">Apps Script</div>
-              <div class="stackItem">Node.js</div>
-              <div class="stackItem">HTML/CSS</div>
-              <div class="stackItem">GitHub Pages</div>
-            </div>
-          </div>
-
-          <div class="card card--solid reveal">
-            <h3 class="card__title">O que eu valorizo</h3>
-            <ul class="list">
-              <li>Clareza antes de complexidade</li>
-              <li>Design que não atrapalha</li>
-              <li>Privacidade e responsabilidade</li>
-              <li>Produto que aguenta o uso real</li>
-            </ul>
-          </div>
-        </div>
+        <aside class="sideCard" id="stack" aria-label="Stack">
+          <h3>Stack</h3>
+          <ul>
+            <li>Front-end: HTML/CSS/JS estático</li>
+            <li>Back-end leve: Apps Script / APIs simples</li>
+            <li>Dados: Sheets, JSON, CSV</li>
+            <li>Dev: GitHub, testes manuais e checklist</li>
+          </ul>
+        </aside>
       </div>
     </section>
 
     <!-- CONTATO -->
-    <section class="section" id="contato">
-      <div class="container">
+    <section class="section section--alt" id="contato" aria-label="Contato">
+      <div class="wrap">
         <div class="sectionHead">
-          <h2 class="sectionTitle">Contato</h2>
-          <p class="sectionSubtitle">Se quiser conversar sobre projetos, ensino ou automação, me chame.</p>
+          <h2>Contato</h2>
+          <p>Formulário sem backend: abre e-mail com assunto e mensagem.</p>
         </div>
 
         <div class="contactGrid">
-          <div class="card card--glass reveal">
-            <h3 class="card__title">Mensagem rápida</h3>
-            <p class="card__muted">
-              Este formulário abre seu cliente de e-mail. É simples e funciona no GitHub Pages sem backend.
-            </p>
+          <form class="form" id="contactForm">
+            <label>
+              <span>Nome</span>
+              <input name="name" required />
+            </label>
+            <label>
+              <span>E-mail</span>
+              <input name="email" type="email" required />
+            </label>
+            <label>
+              <span>Mensagem</span>
+              <textarea name="message" rows="5" required></textarea>
+            </label>
+            <button class="btn btn--primary" type="submit">Enviar</button>
+            <div class="mini">Ajuste o destinatário no script.js.</div>
+          </form>
 
-            <form class="form" id="contactForm">
-              <label class="field">
-                <span class="field__label">Nome</span>
-                <input class="field__input" name="name" type="text" placeholder="Seu nome" autocomplete="name" required />
-              </label>
-
-              <label class="field">
-                <span class="field__label">E-mail</span>
-                <input class="field__input" name="email" type="email" placeholder="seuemail@exemplo.com" autocomplete="email" required />
-              </label>
-
-              <label class="field">
-                <span class="field__label">Mensagem</span>
-                <textarea class="field__input field__textarea" name="message" rows="5" placeholder="O que você precisa?" required></textarea>
-              </label>
-
-              <button class="btn btn--primary" type="submit">Enviar</button>
-              <p class="hint">Edite o destinatário no arquivo script.js.</p>
-            </form>
-          </div>
-
-          <div class="card card--solid reveal">
-            <h3 class="card__title">Links</h3>
-            <div class="linkList">
-              <a class="linkItem" href="#" target="_blank" rel="noopener">GitHub</a>
-              <a class="linkItem" href="#" target="_blank" rel="noopener">LinkedIn</a>
-              <a class="linkItem" href="#" target="_blank" rel="noopener">E-mail</a>
+          <div class="sideCard" id="cv">
+            <h3>Links</h3>
+            <div class="links">
+              <a href="#" target="_blank" rel="noopener">GitHub</a>
+              <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="#" target="_blank" rel="noopener">Currículo (PDF)</a>
             </div>
-
-            <div class="card__divider"></div>
-
-            <h3 class="card__title">Disponibilidade</h3>
-            <p class="card__muted">
-              Eu respondo melhor com contexto: objetivo, prazo e um exemplo do que você quer entregar.
+            <div class="rule"></div>
+            <h3 id="certs">Notas</h3>
+            <p class="mini">
+              Se você quiser, dá para adicionar páginas internas depois (ex.: /stories/slug.html),
+              mantendo o mesmo visual.
             </p>
           </div>
         </div>
@@ -429,15 +317,29 @@
   </main>
 
   <footer class="footer" role="contentinfo">
-    <div class="container footer__inner">
-      <div class="footer__left">
-        <span class="brand__mini" aria-hidden="true"></span>
-        <span>© <span id="year"></span> Bruno Agostinho</span>
+    <div class="wrap footer__grid">
+      <div>
+        <div class="footTitle">Portfólio</div>
+        <a href="#sobre">Sobre</a>
+        <a href="#projetos">Áreas</a>
+        <a href="#stories">Stories</a>
+      </div>
+      <div>
+        <div class="footTitle">Carreira</div>
+        <a href="#skills">Skills</a>
+        <a href="#cases">Cases</a>
+        <a href="#cv">Currículo</a>
+      </div>
+      <div>
+        <div class="footTitle">Biblioteca</div>
+        <a href="#publicacoes">Publicações</a>
+        <a href="#materiais">Materiais</a>
+        <a href="#repos">Repositórios</a>
       </div>
       <div class="footer__right">
-        <a href="#home" class="footer__link">Topo</a>
-        <a href="#projetos" class="footer__link">Projetos</a>
-        <a href="#contato" class="footer__link">Contato</a>
+        <div class="footTitle">Contato</div>
+        <a href="#contato">Enviar mensagem</a>
+        <div class="mini">© <span id="year"></span> Bruno Agostinho</div>
       </div>
     </div>
   </footer>
