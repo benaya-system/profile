@@ -1090,7 +1090,7 @@
        2) Cole a URL do Web App abaixo.
        3) O formulário "Register Interest" fará POST em JSON para essa URL.
     */
-    const REGISTER_INTEREST_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwgawb41_hbCWMFHssF01CLtiLujnTlwEfkoZu0O8NvvourJMa7iPBycacrq0mjQPvMkg/exec"; // ex: https://script.google.com/macros/s/XXXX/exec
+    const REGISTER_INTEREST_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbw1FpNQEtSkvFxhOSzVg4jWDIIHq_D_KxN3jtWk8dnS2ufDxlxP32nNPjBIuOX-IDLJtg/exec"; // ex: https://script.google.com/macros/s/XXXX/exec
 
     /* Mobile menu */
     const menuBtn = document.getElementById('menuBtn');
@@ -1337,21 +1337,21 @@
         statusEl.textContent = 'Enviando...';
 
         try {
+          const params = new URLSearchParams();
+          params.append('formType', 'register_interest');
+          params.append('area', area);
+          params.append('availability', availability);
+          params.append('message', message);
+          params.append('email', email);
+          params.append('phone', phone);
+          params.append('pageUrl', location.href);
+          params.append('userAgent', navigator.userAgent);
+          params.append('origin', location.origin);
+          params.append('timestampClient', new Date().toISOString());
+
           const res = await fetch(REGISTER_INTEREST_WEBAPP_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              formType: 'register_interest',
-              area,
-              availability,
-              message,
-              email,
-              phone,
-              pageUrl: location.href,
-              userAgent: navigator.userAgent,
-              origin: location.origin,
-              timestampClient: new Date().toISOString()
-            })
+            body: params
           });
 
           const data = await res.json().catch(() => ({}));
