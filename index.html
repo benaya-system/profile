@@ -1085,6 +1085,13 @@
   </div>
 
   <script>
+    /* ===== Register Interest (Google Sheets + email) =====
+       1) Publique um Google Apps Script como Web App (doPost).
+       2) Cole a URL do Web App abaixo.
+       3) O formulário "Register Interest" fará POST em JSON para essa URL.
+    */
+    const REGISTER_INTEREST_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwgawb41_hbCWMFHssF01CLtiLujnTlwEfkoZu0O8NvvourJMa7iPBycacrq0mjQPvMkg/exec"; // ex: https://script.google.com/macros/s/XXXX/exec
+
     /* Mobile menu */
     const menuBtn = document.getElementById('menuBtn');
     const mobilePanel = document.getElementById('mobilePanel');
@@ -1257,11 +1264,12 @@
 
     document.getElementById('openApplyBtn').addEventListener('click', () => {
       openModal('Register Interest', `
-        <p class="hint">Registro de interesse. Use para iniciar o processo de vetting e treinamento.</p>
+        <p class="hint">Registro de interesse. Preencha mensagem, e-mail e telefone. Evite dados sensíveis desnecessários.</p>
+
         <div class="row">
           <div>
             <label>Area</label>
-            <select>
+            <select id="riArea">
               <option>Translation & mediation</option>
               <option>Education support</option>
               <option>Logistics & records</option>
@@ -1270,25 +1278,95 @@
           </div>
           <div>
             <label>Availability</label>
-            <select>
+            <select id="riAvailability">
               <option>Remote support</option>
               <option>Local partner</option>
               <option>Hybrid</option>
             </select>
           </div>
         </div>
+
         <div style="margin-top:12px">
           <label>Message</label>
-          <textarea placeholder="Conte brevemente seu perfil e por que você quer ajudar."></textarea>
+          <textarea id="riMessage" placeholder="Conte brevemente seu perfil e por que você quer ajudar."></textarea>
         </div>
+
+        <div class="row" style="margin-top:12px">
+          <div>
+            <label>Email</label>
+            <input id="riEmail" type="email" placeholder="seuemail@exemplo.com" />
+          </div>
+          <div>
+            <label>Phone</label>
+            <input id="riPhone" type="tel" placeholder="+55 (DDD) 9xxxx-xxxx" />
+          </div>
+        </div>
+
         <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap">
-          <button class="btn primary" id="okBtn">Submit</button>
+          <button class="btn primary" id="riSubmitBtn">Submit</button>
           <button class="btn" id="cancelBtn">Cancel</button>
         </div>
-        <p class="hint" style="margin-top:10px">Demo: não envia dados.</p>
+
+        <div id="riStatus" class="hint" style="margin-top:10px"></div>
       `);
+
       modalBody.querySelector('#cancelBtn').addEventListener('click', closeModal);
-      modalBody.querySelector('#okBtn').addEventListener('click', () => { closeModal(); alert('Demo: enviado (não realmente).'); });
+
+      const submitBtn = modalBody.querySelector('#riSubmitBtn');
+      const statusEl = modalBody.querySelector('#riStatus');
+
+      submitBtn.addEventListener('click', async () => {
+        const area = (modalBody.querySelector('#riArea')?.value || '').trim();
+        const availability = (modalBody.querySelector('#riAvailability')?.value || '').trim();
+        const message = (modalBody.querySelector('#riMessage')?.value || '').trim();
+        const email = (modalBody.querySelector('#riEmail')?.value || '').trim();
+        const phone = (modalBody.querySelector('#riPhone')?.value || '').trim();
+
+        if (!REGISTER_INTEREST_WEBAPP_URL || REGISTER_INTEREST_WEBAPP_URL.includes('COLE_AQUI')) {
+          statusEl.textContent = 'Configuração pendente: cole a URL do Web App em REGISTER_INTEREST_WEBAPP_URL no código.';
+          return;
+        }
+
+        if (!message || !email) {
+          statusEl.textContent = 'Preencha pelo menos Message e Email.';
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+        statusEl.textContent = 'Enviando...';
+
+        try {
+          const res = await fetch(REGISTER_INTEREST_WEBAPP_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              formType: 'register_interest',
+              area,
+              availability,
+              message,
+              email,
+              phone,
+              pageUrl: location.href,
+              userAgent: navigator.userAgent,
+              origin: location.origin,
+              timestampClient: new Date().toISOString()
+            })
+          });
+
+          const data = await res.json().catch(() => ({}));
+          if (!data.ok) throw new Error(data.error || 'Falha ao enviar');
+
+          statusEl.textContent = 'Recebido. Obrigado.';
+          setTimeout(() => closeModal(), 700);
+        } catch (err) {
+          statusEl.textContent = 'Erro ao enviar. Tente novamente mais tarde.';
+          console.error(err);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit';
+        }
+      });
     });
 
     document.getElementById('openLibraryBtn').addEventListener('click', () => {
