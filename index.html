@@ -1085,12 +1085,7 @@
   </div>
 
   <script>
-    /* ===== Register Interest (Google Sheets + email) =====
-       1) Publique um Google Apps Script como Web App (doPost).
-       2) Cole a URL do Web App abaixo.
-       3) O formulário "Register Interest" fará POST em JSON para essa URL.
-    */
-    const REGISTER_INTEREST_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbw1FpNQEtSkvFxhOSzVg4jWDIIHq_D_KxN3jtWk8dnS2ufDxlxP32nNPjBIuOX-IDLJtg/exec"; // ex: https://script.google.com/macros/s/XXXX/exec
+    const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbw1FpNQEtSkvFxhOSzVg4jWDIIHq_D_KxN3jtWk8dnS2ufDxlxP32nNPjBIuOX-IDLJtg/exec";
 
     /* Mobile menu */
     const menuBtn = document.getElementById('menuBtn');
@@ -1264,12 +1259,11 @@
 
     document.getElementById('openApplyBtn').addEventListener('click', () => {
       openModal('Register Interest', `
-        <p class="hint">Registro de interesse. Preencha mensagem, e-mail e telefone. Evite dados sensíveis desnecessários.</p>
-
+        <p class="hint">Registro de interesse. Use para iniciar o processo de vetting e treinamento.</p>
         <div class="row">
           <div>
             <label>Area</label>
-            <select id="riArea">
+            <select id="ri_area">
               <option>Translation & mediation</option>
               <option>Education support</option>
               <option>Logistics & records</option>
@@ -1278,7 +1272,7 @@
           </div>
           <div>
             <label>Availability</label>
-            <select id="riAvailability">
+            <select id="ri_availability">
               <option>Remote support</option>
               <option>Local partner</option>
               <option>Hybrid</option>
@@ -1288,88 +1282,74 @@
 
         <div style="margin-top:12px">
           <label>Message</label>
-          <textarea id="riMessage" placeholder="Conte brevemente seu perfil e por que você quer ajudar."></textarea>
+          <textarea id="ri_message" placeholder="Conte brevemente seu perfil e por que você quer ajudar."></textarea>
         </div>
 
         <div class="row" style="margin-top:12px">
           <div>
             <label>Email</label>
-            <input id="riEmail" type="email" placeholder="seuemail@exemplo.com" />
+            <input id="ri_email" type="email" placeholder="seuemail@exemplo.com" />
           </div>
           <div>
             <label>Phone</label>
-            <input id="riPhone" type="tel" placeholder="+55 (DDD) 9xxxx-xxxx" />
+            <input id="ri_phone" type="tel" placeholder="+55..." />
           </div>
         </div>
 
         <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap">
-          <button class="btn primary" id="riSubmitBtn">Submit</button>
+          <button class="btn primary" id="okBtn">Submit</button>
           <button class="btn" id="cancelBtn">Cancel</button>
         </div>
-
-        <div id="riStatus" class="hint" style="margin-top:10px"></div>
+        <p class="hint" style="margin-top:10px">Ao enviar, seus dados serão registrados para contato e triagem.</p>
       `);
 
       modalBody.querySelector('#cancelBtn').addEventListener('click', closeModal);
 
-      const submitBtn = modalBody.querySelector('#riSubmitBtn');
-      const statusEl = modalBody.querySelector('#riStatus');
-
-      submitBtn.addEventListener('click', async () => {
-        const area = (modalBody.querySelector('#riArea')?.value || '').trim();
-        const availability = (modalBody.querySelector('#riAvailability')?.value || '').trim();
-        const message = (modalBody.querySelector('#riMessage')?.value || '').trim();
-        const email = (modalBody.querySelector('#riEmail')?.value || '').trim();
-        const phone = (modalBody.querySelector('#riPhone')?.value || '').trim();
-
-        if (!REGISTER_INTEREST_WEBAPP_URL || REGISTER_INTEREST_WEBAPP_URL.includes('COLE_AQUI')) {
-          statusEl.textContent = 'Configuração pendente: cole a URL do Web App em REGISTER_INTEREST_WEBAPP_URL no código.';
-          return;
-        }
+      modalBody.querySelector('#okBtn').addEventListener('click', async () => {
+        const area = (modalBody.querySelector('#ri_area')?.value || '').trim();
+        const availability = (modalBody.querySelector('#ri_availability')?.value || '').trim();
+        const message = (modalBody.querySelector('#ri_message')?.value || '').trim();
+        const email = (modalBody.querySelector('#ri_email')?.value || '').trim();
+        const phone = (modalBody.querySelector('#ri_phone')?.value || '').trim();
 
         if (!message || !email) {
-          statusEl.textContent = 'Preencha pelo menos Message e Email.';
+          alert('Preencha pelo menos Message e Email.');
           return;
         }
 
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Sending...';
-        statusEl.textContent = 'Enviando...';
+        const okBtn = modalBody.querySelector('#okBtn');
+        const cancelBtn = modalBody.querySelector('#cancelBtn');
+        if (okBtn) okBtn.disabled = true;
+        if (cancelBtn) cancelBtn.disabled = true;
 
         try {
-          const params = new URLSearchParams();
-          params.append('formType', 'register_interest');
-          params.append('area', area);
-          params.append('availability', availability);
-          params.append('message', message);
-          params.append('email', email);
-          params.append('phone', phone);
-          params.append('pageUrl', location.href);
-          params.append('userAgent', navigator.userAgent);
-          params.append('origin', location.origin);
-          params.append('timestampClient', new Date().toISOString());
-
-          const res = await fetch(REGISTER_INTEREST_WEBAPP_URL, {
+          await fetch(WEBAPP_URL, {
             method: 'POST',
-            body: params
+            mode: 'no-cors',
+            body: new URLSearchParams({
+              formType: 'register_interest',
+              area,
+              availability,
+              message,
+              email,
+              phone,
+              pageUrl: location.href,
+              userAgent: navigator.userAgent,
+              origin: location.origin
+            })
           });
 
-          const data = await res.json().catch(() => ({}));
-          if (!data.ok) throw new Error(data.error || 'Falha ao enviar');
-
-          statusEl.textContent = 'Recebido. Obrigado.';
-          setTimeout(() => closeModal(), 700);
+          closeModal();
+          alert('Enviado.');
         } catch (err) {
-          statusEl.textContent = 'Erro ao enviar. Tente novamente mais tarde.';
           console.error(err);
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Submit';
+          alert('Falha ao enviar. Tente novamente.');
+          if (okBtn) okBtn.disabled = false;
+          if (cancelBtn) cancelBtn.disabled = false;
         }
       });
     });
-
-    document.getElementById('openLibraryBtn').addEventListener('click', () => {
+document.getElementById('openLibraryBtn').addEventListener('click', () => {
       openModal('Library (Template)', `
         <ul class="list">
           <li><strong>Needs Assessment Form:</strong> <span>categorias, urgência, evidências mínimas.</span></li>
